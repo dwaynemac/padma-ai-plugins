@@ -22,7 +22,7 @@
 6. Compare with the previous equivalent period only when requested or useful, using identical filters and date basis.
 7. Present confirmed totals, changes, findings, exclusions, and incomplete data.
 
-Do not claim an opening or closing account balance because the current tool surface does not expose a dedicated balance-at-date operation.
+Para saldos de apertura y cierre de una cuenta, usá `get_account_balance`: consultá el cierre del día anterior al inicio del período y el cierre de su último día, respectivamente. Conservá el negocio, la cuenta, la moneda y la zona horaria; no infieras saldos a partir de subtotales por categoría.
 
 ## Reconcile an account against supplied evidence
 

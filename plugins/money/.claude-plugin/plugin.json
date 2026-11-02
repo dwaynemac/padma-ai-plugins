@@ -1,7 +1,7 @@
 {
   "name": "money",
-  "version": "0.1.9+codex.20261019203407",
-  "description": "Consult enriched contacts, identify plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server.",
+  "version": "0.1.10+codex.20261102123939",
+  "description": "Consult account balances at a date, enriched contacts and plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server.",
   "author": {
     "name": "PADMA"
   },

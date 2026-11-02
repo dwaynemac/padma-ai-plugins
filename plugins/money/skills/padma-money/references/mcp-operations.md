@@ -91,6 +91,7 @@ It accepts no arguments and returns only locally usable Businesses authorized by
 
 - `get_business_context`
 - `list_accounts`
+- `get_account_balance`
 - `search_categories`
 - `search_contacts`
 - `search_movements`
@@ -117,6 +118,20 @@ Selection guidance:
 - Use `category_subtotals` for category totals instead of summing a partially paginated movement page.
 - Use `analyze_movements` for deterministic trends, variance, uncategorized items, aging, probable duplicates, outliers, and reporting-month mismatches.
 - Use `search_plans` for forecast records and `search_recurrent_movements` for rules that create realized movements. Do not confuse the two.
+
+### Saldo de cuenta en `get_account_balance`
+
+Es una consulta de solo lectura. Requiere `account_id` entero y `date` como string en formato estricto `YYYY-MM-DD`; acepta el `business_id` opcional habitual. Resolvé la cuenta con `list_accounts` dentro del mismo negocio. Para cuentas archivadas, usá `list_accounts(archived: true)`.
+
+Devuelve `account: {id, name}`, `date`, `timezone` y `balance: {cents, currency}`. El saldo incluye el día completo en la zona horaria del negocio y usa la moneda de la cuenta, que puede diferir de la moneda base del negocio. Incluye ingresos, egresos y transferencias con su conversión; los movimientos hechos impactan desde `movement_at`, los conciliados desde `reconciled_at` y los pendientes no afectan el saldo. Las cuentas archivadas se pueden consultar; las eliminadas quedan excluidas. Una fecha futura calcula el saldo con los movimientos registrados hasta ese corte; no es una proyección de planes ni recurrencias todavía no generadas.
+
+Ejemplo, después de resolver el negocio y el ID de la cuenta:
+
+```json
+{"account_id": 123, "date": "2026-10-31"}
+```
+
+Agregá el `business_id` autorizado cuando corresponda. Una fecha inválida devuelve `validation_failed`; una cuenta inexistente, eliminada o de otro negocio devuelve `not_found`; un acceso no autorizado devuelve `forbidden`. Para obtener el saldo de apertura de un período, consultá el cierre del día anterior. No sumes una página de movimientos para sustituir este cálculo.
 
 ### Deuda de pagos en `search_plans`
 
@@ -167,8 +182,8 @@ Las fechas incompletas, inválidas, invertidas por mes, `has_debt` sin rango y l
 - `create_plan`, `update_plan`
 - `create_automation_rule`, `update_automation_rule`
 
-The implemented MCP exposes thirty-three tools: `list_businesses` plus thirty-two Business-contextual tools. `delete_movement` performs a recoverable soft delete. `delete_recurrent_movement` permanently removes one recurrent rule while preserving movements it already generated. `revert_split` atomically restores one split's original movement and removes all unchanged targets. The MCP does not expose general movement restoration, physical deletion beyond recurrent movement rules, deletion of other record types, batch mutation, import, contact mutation, automatic bank-statement reconciliation, or the monthly budget report.
-It also does not expose dedicated account-balance, payable, receivable, or projected-cash-flow tools. Category tools expose the configured monthly budget only; never claim that this is the report or that unsupported outputs are directly available.
+The implemented MCP exposes thirty-four tools: `list_businesses` plus thirty-three Business-contextual tools. `delete_movement` performs a recoverable soft delete. `delete_recurrent_movement` permanently removes one recurrent rule while preserving movements it already generated. `revert_split` atomically restores one split's original movement and removes all unchanged targets. The MCP does not expose general movement restoration, physical deletion beyond recurrent movement rules, deletion of other record types, batch mutation, import, contact mutation, automatic bank-statement reconciliation, or the monthly budget report.
+It also does not expose dedicated payable, receivable, or projected-cash-flow tools. Account balances at a date are available through `get_account_balance`. Category tools expose the configured monthly budget only; never claim that this is the report or that unsupported outputs are directly available.
 
 ## Shared contracts
 

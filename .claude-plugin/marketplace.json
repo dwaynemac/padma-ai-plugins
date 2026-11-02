@@ -9,7 +9,7 @@
     {
       "name": "money",
       "source": "./plugins/money",
-      "description": "Consult enriched contacts, identify plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server."
+      "description": "Consult account balances at a date, enriched contacts and plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server."
     },
     {
       "name": "crm",

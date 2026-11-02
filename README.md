@@ -138,6 +138,7 @@ Conecta el agente con [PADMA Money](https://money.derose.app/) mediante su servi
 Permite:
 
 - descubrir y seleccionar entre los negocios autorizados por OAuth;
+- consultar saldos de cuentas al cierre de una fecha, en la zona horaria del negocio y la moneda de cada cuenta;
 - consultar cuentas, categorías, contactos enriquecidos con docente, Learn ID, LTV y plan actual, y movimientos;
 - identificar planes con o sin deuda de pagos en un rango mensual inclusivo de hasta 36 meses, incluidos planes ya terminados;
 - buscar contactos por `padma_id` exacto y movimientos por `contact_padma_id`;
@@ -149,6 +150,8 @@ Permite:
 - aplicar confirmación, idempotencia y verificación en operaciones de escritura.
 
 El plugin incluye la skill `padma-money`, que enseña al agente el modelo financiero de Money, sus workflows seguros y las limitaciones reales de las herramientas disponibles.
+
+Para consultar un saldo por fecha, usá `get_account_balance` con el `account_id` de `list_accounts` y una fecha `YYYY-MM-DD`. Incluye ese día completo; admite cuentas archivadas y excluye pendientes. Consultá el [contrato y ejemplo](plugins/money/skills/padma-money/references/mcp-operations.md#saldo-de-cuenta-en-get_account_balance).
 
 Para buscar deuda de planes, usá `search_plans` con `has_debt: true` y ambas fechas `from`/`to` en formato `YYYY-MM-DD`. Los días se normalizan al mes; no combines el rango con `active_on`. Un mes activo impago cuenta cuando su primer día es anterior a hoy en la zona horaria del negocio: el mes actual participa desde el segundo día. `has_debt: false` devuelve el complemento entre los planes activos en el rango; omitirlo permite buscar todos esos planes. Este filtro no calcula un saldo ni un total adeudado. Consultá el [contrato completo y los ejemplos](plugins/money/skills/padma-money/references/mcp-operations.md#deuda-de-pagos-en-search_plans).
 
@@ -250,6 +253,7 @@ Se pueden publicar comentarios; no se pueden editar ni eliminar mediante MCP.
 
 ### Money
 
+- “Mostrame el saldo de la cuenta Caja al cierre del 31 de octubre de 2026.”
 - “Mostrame los planes con deuda de pagos de enero a marzo de 2026, incluidos los que ya terminaron.”
 - “Buscá este contacto y mostrame su docente, Learn ID, LTV y plan actual.”
 - “¿Cuánto gastamos el mes pasado, separado por categoría?”

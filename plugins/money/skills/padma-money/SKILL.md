@@ -1,6 +1,6 @@
 ---
 name: padma-money
-description: Use PADMA Money through its remote MCP server to inspect accounts, categories and their monthly budgets, contacts, movements and their splits, financial reports, recurrent movements, plans with payment debt over a bounded monthly range, and automation rules; create, update, prorate, subdivide, revert splits, soft-delete movements, or delete recurrent movement rules safely. Use for requests such as cuanto gastamos, ingresos del mes, flujo de caja, compara periodos, revisa pagos, configura un presupuesto de categoria, registra un gasto, corrige, categoriza, divide, prorratea o elimina un movimiento, elimina una recurrencia, revierte una division, concilia una cuenta, detecta anomalias, or otherwise consults or manages an organization's financial information stored in Money.
+description: Use PADMA Money through its remote MCP server to inspect accounts and their balances at a date, categories and their monthly budgets, contacts, movements and their splits, financial reports, recurrent movements, plans with payment debt over a bounded monthly range, and automation rules; create, update, prorate, subdivide, revert splits, soft-delete movements, or delete recurrent movement rules safely. Use for requests such as cuanto gastamos, ingresos del mes, flujo de caja, compara periodos, revisa pagos, configura un presupuesto de categoria, registra un gasto, corrige, categoriza, divide, prorratea o elimina un movimiento, elimina una recurrencia, revierte una division, concilia una cuenta, detecta anomalias, or otherwise consults or manages an organization's financial information stored in Money.
 ---
 
 # Use Money MCP
@@ -35,6 +35,10 @@ Use the `money` MCP server as the only execution path for Money data. OAuth dete
 11. Present monetary values in human units with their currency while retaining exact integer cents when precision matters.
 12. State the business or account scope, period, date basis, currency, filters, and material exclusions.
 13. Separate MCP-confirmed facts from interpretation or recommendations. Do not label derived output as an official accounting statement.
+
+## Saldo de una cuenta por fecha
+
+Usá `get_account_balance` con un `account_id` obtenido de `list_accounts` y `date` en formato estricto `YYYY-MM-DD`. Incluye el día completo en la zona horaria del negocio y devuelve la moneda de la cuenta. Para encontrar una cuenta archivada, consultá `list_accounts(archived: true)`; su saldo también se puede consultar. No calcules el saldo sumando una página de movimientos ni lo confundas con un reporte por categoría. Para un saldo de apertura, consultá el cierre del día anterior al inicio del período. Seguí el [contrato y ejemplo](references/mcp-operations.md#saldo-de-cuenta-en-get_account_balance).
 
 ## Deuda de pagos de planes
 

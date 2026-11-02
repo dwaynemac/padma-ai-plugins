@@ -1,7 +1,7 @@
 {
   "name": "money",
-  "version": "0.1.9+codex.20261019203407",
-  "description": "Consult enriched contacts, identify plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server.",
+  "version": "0.1.10+codex.20261102123939",
+  "description": "Consult account balances at a date, enriched contacts and plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server.",
   "author": {
     "name": "PADMA"
   },
@@ -17,7 +17,7 @@
   "interface": {
     "displayName": "Money",
     "shortDescription": "Consultá y administrá Money con MCP",
-    "longDescription": "Conecta Codex con los negocios autorizados de Money para consultar cuentas, categorías, sus árboles y presupuestos mensuales multimoneda, contactos por PADMA ID con docente, Learn ID, LTV y plan actual, movimientos y reportes, y realizar cambios financieros —incluido configurar presupuestos, dividir, revertir divisiones y eliminar movimientos o reglas recurrentes— con confirmación, idempotencia y verificación. También permite buscar planes con o sin deuda de pagos dentro de un rango mensual explícito de hasta 36 meses.",
+    "longDescription": "Conecta Codex con los negocios autorizados de Money para consultar cuentas y sus saldos al cierre de una fecha en la zona horaria del negocio, categorías, sus árboles y presupuestos mensuales multimoneda, contactos por PADMA ID con docente, Learn ID, LTV y plan actual, movimientos y reportes, y realizar cambios financieros —incluido configurar presupuestos, dividir, revertir divisiones y eliminar movimientos o reglas recurrentes— con confirmación, idempotencia y verificación. También permite buscar planes con o sin deuda de pagos dentro de un rango mensual explícito de hasta 36 meses.",
     "developerName": "PADMA",
     "category": "Productivity",
     "capabilities": [
@@ -26,6 +26,7 @@
     ],
     "websiteURL": "https://money.derose.app/",
     "defaultPrompt": [
+      "Mostrame el saldo de la cuenta Caja al cierre del 31 de octubre de 2026.",
       "Mostrame los planes con deuda de pagos de enero a marzo de 2026, incluidos los que ya terminaron.",
       "Listá los negocios de Money que tengo autorizados.",
       "Listá mis cuentas y sus monedas.",

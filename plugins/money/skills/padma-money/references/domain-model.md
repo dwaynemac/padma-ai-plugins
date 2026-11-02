@@ -66,4 +66,4 @@ A rule applied only when a movement is created. It can assign metadata or conver
 - Do not mix realized movements with plan forecasts without labeling them separately.
 - Do not add different currencies unless an explicit supported conversion basis is available.
 - Do not infer a missing payment until the relevant accounts, date basis, period, pagination, and filters have been checked.
-- Do not invent commitments, payables, receivables, balances, or monthly budget report results: the MCP exposes configured category budgets but no dedicated tools for those other concepts.
+- Consultá saldos de cuentas por fecha con `get_account_balance`; no los infieras de reportes por categoría. No inventes compromisos, cuentas por pagar o cobrar ni resultados del reporte de presupuesto mensual: esas consultas no tienen herramientas específicas en el MCP.
