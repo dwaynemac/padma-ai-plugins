@@ -29,7 +29,7 @@ Use the `money` MCP server as the only execution path for Money data. OAuth dete
 5. Use `category_tree_ids` on `search_movements` when the request covers one or more categories plus all their descendants. Resolve every root ID with `search_categories`; keep `category_id` for one exact category.
 6. Read `monthly_budget` from `search_categories` when the user asks about a category's configured monthly budget. It is either null or an object with integer `cents` and the category's stored `currency`; it is not the monthly budget report. Do not assume that its currency matches the Business base currency.
 7. Paginate when the requested scope exceeds one page. Do not infer a complete result from a truncated page.
-8. Preserve Money semantics: `report_on` selects reporting months; `movement_at` and `reconciled_at` select actual dates.
+8. Preserve Money semantics: `report_on` selects reporting months; `movement_at` and `settled_at` select actual dates.
 9. Prefer `category_subtotals` for category totals and `analyze_movements` for deterministic findings. Use movement search for detail, audit, categorization, reconciliation, or explaining an aggregate.
 10. Calculate from structured integer values, never from formatted display text. Do not add unlike currencies or silently convert them.
 11. Present monetary values in human units with their currency while retaining exact integer cents when precision matters.

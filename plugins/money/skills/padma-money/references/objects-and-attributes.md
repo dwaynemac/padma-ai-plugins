@@ -42,10 +42,10 @@ Interpret Money records with these product semantics. The field names shown are 
 - `movement_at` is the actual movement date.
 - `report_on` is the administrative reporting month. It controls monthly reports, category subtotals, and matching a payment to a plan; it can differ from `movement_at`.
 - `state` controls balance timing, not report inclusion:
-  - Pending: included in reports; excluded from account balance.
-  - Done: included in reports; affects balance on `movement_at`.
-  - Reconciled: included in reports; affects balance from `reconciled_at`.
-- `reconciled_at` is meaningful for a reconciled movement and records when a formerly pending movement began affecting the balance.
+  - `pending`: included in reports; excluded from account balance.
+  - `created`: included in reports; affects balance on `movement_at`.
+  - `settled`: included in reports; affects balance from `settled_at`.
+- `settled_at` is meaningful for a settled movement and records when a formerly pending movement began affecting the balance.
 - `category_id` classifies the movement for reporting; it does not identify where money is held.
 - `contact_id` attributes the movement to a person and affects that contact's LTV.
 - `agent_id` attributes an instructor or agent. Do not confuse it with the contact.

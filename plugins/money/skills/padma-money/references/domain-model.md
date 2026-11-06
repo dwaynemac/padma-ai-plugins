@@ -56,7 +56,7 @@ A rule applied only when a movement is created. It can assign metadata or conver
 ## Reporting concepts
 
 - Actual movement date: when the money moved.
-- Reconciliation date: when a pending movement began affecting the account balance.
+- Settlement date (`settled_at`): when a pending movement began affecting the account balance.
 - Reporting month: the administrative month used for reports and plan matching.
 - Category subtotal: a deterministic aggregate of report-attributed movements.
 - Analysis finding: evidence produced by Money for trends, variance, missing categorization, aging, duplicates, outliers, or date/report-month mismatch.

@@ -123,7 +123,7 @@ Selection guidance:
 
 Es una consulta de solo lectura. Requiere `account_id` entero y `date` como string en formato estricto `YYYY-MM-DD`; acepta el `business_id` opcional habitual. Resolvé la cuenta con `list_accounts` dentro del mismo negocio. Para cuentas archivadas, usá `list_accounts(archived: true)`.
 
-Devuelve `account: {id, name}`, `date`, `timezone` y `balance: {cents, currency}`. El saldo incluye el día completo en la zona horaria del negocio y usa la moneda de la cuenta, que puede diferir de la moneda base del negocio. Incluye ingresos, egresos y transferencias con su conversión; los movimientos hechos impactan desde `movement_at`, los conciliados desde `reconciled_at` y los pendientes no afectan el saldo. Las cuentas archivadas se pueden consultar; las eliminadas quedan excluidas. Una fecha futura calcula el saldo con los movimientos registrados hasta ese corte; no es una proyección de planes ni recurrencias todavía no generadas.
+Devuelve `account: {id, name}`, `date`, `timezone` y `balance: {cents, currency}`. El saldo incluye el día completo en la zona horaria del negocio y usa la moneda de la cuenta, que puede diferir de la moneda base del negocio. Incluye ingresos, egresos y transferencias con su conversión; los movimientos hechos impactan desde `movement_at`, los saldados desde `settled_at` y los pendientes no afectan el saldo. Las cuentas archivadas se pueden consultar; las eliminadas quedan excluidas. Una fecha futura calcula el saldo con los movimientos registrados hasta ese corte; no es una proyección de planes ni recurrencias todavía no generadas.
 
 Ejemplo, después de resolver el negocio y el ID de la cuenta:
 
@@ -172,6 +172,8 @@ Las fechas incompletas, inválidas, invertidas por mes, `has_debt` sin rango y l
 - `category_subtotals`
 - `analyze_movements`
 
+The aging finding is `aged_unsettled`: it flags movements older than the configured threshold unless their state is `settled`.
+
 ### Writes
 
 - `create_movement`, `update_movement`, `delete_movement`
@@ -207,15 +209,15 @@ It also does not expose dedicated payable, receivable, or projected-cash-flow to
 ### Dates and reporting months
 
 - Use `movement_at` for when money actually moved.
-- Use `reconciled_at` for when a pending movement affected the account balance.
+- Use `settled_at` for when a pending movement affected the account balance.
 - Use `report_on` for the reporting month. Its `from` and `to` inputs include whole calendar months, even when day components are supplied.
 - Movement searches default to a recent period; specify the intended range rather than assuming all history was searched.
 
 ### Movement states
 
-- Pending movements count in reports but do not change account balances.
-- Done movements count in reports and change balances on `movement_at`.
-- Reconciled movements count in reports and change balances from `reconciled_at`.
+- `pending` movements count in reports but do not change account balances.
+- `created` movements count in reports and change balances on `movement_at`.
+- `settled` movements count in reports and change balances from `settled_at`. Settlement means completion of a formerly pending payment or transfer; bank-statement reconciliation is a separate process.
 
 ## Safe write patterns
 

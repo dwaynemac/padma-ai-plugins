@@ -101,7 +101,7 @@ Use the matching `search_*` and `get_*` tool before any create, update, or delet
 
 Negocio: <business>
 Período: <inclusive period>
-Base: <report_on, movement_at, or reconciled_at>
+Base: <report_on, movement_at, or settled_at>
 Alcance: <accounts/categories or whole business>
 Moneda: <currency>
 

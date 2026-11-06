@@ -43,9 +43,9 @@ Money has three movement types:
 
 Movement state controls balance impact:
 
-- Pending: included in reports and category subtotals, but not in account balance.
-- Done: included in reports and reflected in the account balance at the movement date.
-- Reconciled: included in reports and reflected in the account balance from the reconciliation date.
+- `pending`: included in reports and category subtotals, but not in account balance.
+- `created`: included in reports and reflected in the account balance at the movement date.
+- `settled`: included in reports and reflected in the account balance from `settled_at`, when a formerly pending payment or transfer was completed.
 
 The reporting month is independent from the actual movement date. Use it when a payment belongs to a different administrative month, such as a student paying one month's fee during another month.
 
