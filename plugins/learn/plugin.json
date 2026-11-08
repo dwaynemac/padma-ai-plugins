@@ -1,0 +1,39 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "learn",
+  "version": "0.1.0",
+  "description": "Administer authorized Learn schools through the teacher MCP: publications, students and access, subscriptions, courses and members, bookings, check-ins, and attendance reports.",
+  "author": {
+    "name": "PADMA"
+  },
+  "homepage": "https://learn.derose.app/",
+  "repository": "https://github.com/dwaynemac/padma-tools",
+  "keywords": [
+    "learn",
+    "teachers",
+    "schools",
+    "padma",
+    "mcp"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "PADMA Learn",
+        "shortDescription": "Administrá tu escuela en Learn",
+        "longDescription": "Administrá publicaciones, alumnos y accesos, suscripciones, cursos y miembros, reservas y check-ins de tus escuelas autorizadas. Consultá los reportes administrativos de asistencia con los mismos permisos que tu usuario docente.",
+        "developerName": "PADMA",
+        "category": "Productivity",
+        "capabilities": [
+          "Interactive",
+          "Write"
+        ],
+        "websiteURL": "https://learn.derose.app/",
+        "defaultPrompt": [
+          "Listá mis escuelas autorizadas de Learn.",
+          "Mostrame las reservas de esta semana en mi escuela.",
+          "Consultá el reporte de check-ins del último mes."
+        ]
+      }
+    }
+  }
+}

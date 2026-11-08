@@ -60,5 +60,6 @@ oficial:
 claude plugin validate .
 claude plugin validate ./plugins/crm
 claude plugin validate ./plugins/money
+claude plugin validate ./plugins/learn
 claude plugin validate ./plugins/padma
 ```

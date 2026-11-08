@@ -1,11 +1,16 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "padma-tools",
-  "description": "Plugins for working safely with PADMA CRM and Money from Claude Code.",
+  "description": "Plugins for working with PADMA CRM, Money, and Learn from Claude Code.",
   "owner": {
     "name": "PADMA"
   },
   "plugins": [
+    {
+      "name": "learn",
+      "source": "./plugins/learn",
+      "description": "Administer authorized Learn schools: publications, students and access, subscriptions, courses, bookings, check-ins, and attendance reports."
+    },
     {
       "name": "money",
       "source": "./plugins/money",
