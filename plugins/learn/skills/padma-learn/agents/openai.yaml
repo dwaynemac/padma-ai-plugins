@@ -1,0 +1,12 @@
+interface:
+  display_name: "PADMA Learn"
+  short_description: "Administrar cursos, alumnos y asistencia en Learn"
+  default_prompt: "Usá $padma-learn para administrar mi escuela autorizada en Learn o consultar sus reportes de reservas y check-ins."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "learn"
+      description: "Servidor MCP de administración docente de Learn"
+      transport: "streamable_http"
+      url: "https://learn.derose.app/mcp"

@@ -65,10 +65,11 @@ class MarketplaceCompatibilityTest < Minitest::Test
     end
   end
 
-  def test_money_declares_oauth_for_openai_hosts
-    server = read_json("plugins/money/mcp.json").fetch("mcpServers").fetch("money")
-
-    assert_equal "oauth", server.dig("extensions", "com.openai", "auth", "type")
+  def test_money_and_learn_declare_oauth_for_openai_hosts
+    %w[money learn].each do |name|
+      server = read_json("plugins/#{name}/mcp.json").fetch("mcpServers").fetch(name)
+      assert_equal "oauth", server.dig("extensions", "com.openai", "auth", "type")
+    end
   end
 
   def test_crm_review_and_publication_metadata_match_portable_package

@@ -7,15 +7,19 @@ Este repositorio publica catálogos específicos para cada cliente. Ambos
 instalan los mismos plugins, skills y conexiones MCP con las aplicaciones de
 PADMA.
 
-Incluye dos integraciones MCP oficiales e independientes:
+Incluye tres integraciones MCP independientes:
 
 - [`crm`](#crm), para contactos, actividad, métricas y operaciones comerciales
   en PADMA CRM.
 - [`money`](#money), para cuentas, planes, presupuestos y movimientos
   financieros en PADMA Money.
+- [`learn`](#learn), para administrar publicaciones, alumnos, accesos,
+  suscripciones, cursos y asistencia de una escuela en Learn.
 
-Instalá ambos plugins si necesitás trabajar entre CRM y Money; instalá sólo el
+Instalá CRM y Money si necesitás trabajar entre ambos productos; instalá sólo el
 plugin correspondiente cuando tu consulta pertenezca a un único producto.
+Learn se instala de forma independiente; el coordinador `padma` conserva su
+alcance de CRM y Money.
 
 Cada directorio bajo `plugins/` también publica el contrato portable de
 [Agent Plugins 1.0](https://agent-plugins.org/) mediante un `plugin.json`, sus
@@ -51,6 +55,7 @@ Necesitás una versión reciente de Claude Code con soporte para plugins.
 claude plugin marketplace add dwaynemac/padma-tools
 claude plugin install crm@padma-tools
 claude plugin install money@padma-tools
+claude plugin install learn@padma-tools
 claude plugin install padma@padma-tools
 ```
 
@@ -72,6 +77,46 @@ claude plugin marketplace update padma-tools
 ```
 
 ## Plugins disponibles
+
+### Learn
+
+Conecta al teacher con la administración de sus escuelas en
+[Learn](https://learn.derose.app/) mediante el servidor MCP `learn` y la skill
+`padma-learn`. Requiere que Learn tenga habilitado su MCP docente y que Accounts
+admita el scope `learn`; instalar este paquete no despliega esos cambios.
+
+Permite administrar publicaciones con contenido y enlaces suministrados,
+alumnos y accesos, suscripciones, cursos y sus miembros, reservas y check-ins.
+Incluye reportes estructurados de check-ins, reservas, distribución de check-ins
+y clases por instructor, conservando permisos, períodos y filtros de `/admin`.
+Las operaciones de suscripciones respetan las reglas existentes de Stripe,
+MercadoPago y suscripciones manuales.
+
+No administra cuentas de teachers ni configuración global; no automatiza
+duplicación avanzada, híbridos, reuniones Zoom ni grabaciones. Las reservas
+personales de alumnos usan su integración propia.
+
+#### Configurar el acceso
+
+1. Instalá `learn` e iniciá una tarea nueva.
+2. Conectá el MCP mediante Accounts OAuth. El cliente descubre CIMD/DCR y usa
+   PKCE; no configures un Client ID ni un Client Secret compartidos.
+3. Autorizá las escuelas necesarias con `openid profile account learn`.
+4. Verificá con `Listá mis escuelas autorizadas de Learn.` y después consultá
+   `get_account_context` de la escuela seleccionada. El teacher debe existir y
+   conservar su vinculación en Learn.
+
+El recurso predeterminado es `https://learn.derose.app/mcp`; la alternativa
+PADMA es `https://learn.padm.am/mcp`. Al cambiar el endpoint, la URL configurada,
+el resource OAuth y la dependencia de la skill deben coincidir. Cada recurso
+requiere su grant: una conexión CRM o Money no autoriza Learn.
+
+Toda escritura usa `request_id` para reintentos; las modificaciones y
+eliminaciones comprueban la revisión vigente con `expected_updated_at`.
+La skill enseña a releer el resultado y distinguir cambios locales, efectos
+confirmados por gateways y sincronizaciones pendientes.
+Consultá el [contrato de operaciones](plugins/learn/skills/padma-learn/references/mcp-operations.md)
+y la [guía de reportes](plugins/learn/skills/padma-learn/references/reports.md).
 
 ### PADMA
 
