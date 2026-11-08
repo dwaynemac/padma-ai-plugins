@@ -1,4 +1,4 @@
-# Contribuir a PADMA Tools
+# Contribuir a PADMA AI Plugins
 
 Buscamos integraciones pequeñas, claras y útiles para usuarios reales de PADMA.
 

@@ -1,12 +1,12 @@
 {
   "name": "crm",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "description": "Consult authorized PADMA CRM contacts, saved-list rules, and existing tag assignments, Operations project members and sections, multi-project task assignments, collaborators, recurrence, comments, and task change history, rankings, Learn links, properties, activity, and statistics, and safely create or update supported records through its remote MCP server. Prefer and attempt MCP first; CRM browser access requires an explicit user request and preserves authorization and data restrictions.",
   "author": {
     "name": "PADMA"
   },
   "homepage": "https://crm.derose.app/",
-  "repository": "https://github.com/dwaynemac/padma-tools",
+  "repository": "https://github.com/dwaynemac/padma-ai-plugins",
   "keywords": [
     "crm",
     "contacts",

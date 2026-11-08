@@ -1,13 +1,13 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "money",
-  "version": "0.1.11+codex.20261106174409",
+  "version": "0.1.12+codex.20261108210114",
   "description": "Consult account balances at a date, enriched contacts and plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server.",
   "author": {
     "name": "PADMA"
   },
   "homepage": "https://app.notion.com/p/d3f8c1b5da5c44be8ec38d06891c185c",
-  "repository": "https://github.com/dwaynemac/padma-tools",
+  "repository": "https://github.com/dwaynemac/padma-ai-plugins",
   "keywords": [
     "money",
     "finance",

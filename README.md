@@ -1,4 +1,4 @@
-# PADMA Tools
+# PADMA AI Plugins
 
 Plugins y skills para que los usuarios de [PADMA](https://derose.app/) puedan
 trabajar con sus datos desde Codex y Claude Code.
@@ -31,20 +31,20 @@ con los manifiestos y marketplaces específicos de Codex y Claude Code.
 Necesitás una versión reciente de Codex con soporte para plugins.
 
 ```bash
-codex plugin marketplace add dwaynemac/padma-tools
+codex plugin marketplace add dwaynemac/padma-ai-plugins
 ```
 
 Después:
 
 1. Abrí el catálogo con `/plugins` en Codex CLI o desde **Plugins** en la app de ChatGPT/Codex.
-2. Elegí **PADMA Tools**.
+2. Elegí **PADMA AI Plugins**.
 3. Instalá el plugin que quieras usar.
 4. Iniciá una tarea nueva para que el agente cargue sus skills y herramientas.
 
 Para actualizar el catálogo y los plugins instalados:
 
 ```bash
-codex plugin marketplace upgrade padma-tools
+codex plugin marketplace upgrade padma-ai-plugins
 ```
 
 ## Instalar el marketplace en Claude Code
@@ -52,20 +52,20 @@ codex plugin marketplace upgrade padma-tools
 Necesitás una versión reciente de Claude Code con soporte para plugins.
 
 ```bash
-claude plugin marketplace add dwaynemac/padma-tools
-claude plugin install crm@padma-tools
-claude plugin install money@padma-tools
-claude plugin install learn@padma-tools
-claude plugin install padma@padma-tools
+claude plugin marketplace add dwaynemac/padma-ai-plugins
+claude plugin install crm@padma-ai-plugins
+claude plugin install money@padma-ai-plugins
+claude plugin install learn@padma-ai-plugins
+claude plugin install padma@padma-ai-plugins
 ```
 
 El plugin `padma` sólo coordina los otros dos: no declara servidores MCP. Para
 usar un solo producto, instalá únicamente su plugin:
 
 ```bash
-claude plugin install money@padma-tools
+claude plugin install money@padma-ai-plugins
 # o
-claude plugin install crm@padma-tools
+claude plugin install crm@padma-ai-plugins
 ```
 
 Iniciá o reiniciá Claude Code para cargar las skills y herramientas del plugin.
@@ -73,7 +73,7 @@ Iniciá o reiniciá Claude Code para cargar las skills y herramientas del plugin
 Para actualizar el catálogo:
 
 ```bash
-claude plugin marketplace update padma-tools
+claude plugin marketplace update padma-ai-plugins
 ```
 
 ## Plugins disponibles

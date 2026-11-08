@@ -1,7 +1,7 @@
 {
-  "name": "padma-tools",
+  "name": "padma-ai-plugins",
   "interface": {
-    "displayName": "PADMA Tools"
+    "displayName": "PADMA AI Plugins"
   },
   "plugins": [
     {

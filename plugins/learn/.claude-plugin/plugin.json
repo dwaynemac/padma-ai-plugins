@@ -1,12 +1,12 @@
 {
   "name": "learn",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Administer authorized Learn schools through the teacher MCP: publications, students and access, subscriptions, courses and members, bookings, check-ins, and attendance reports.",
   "author": {
     "name": "PADMA"
   },
   "homepage": "https://learn.derose.app/",
-  "repository": "https://github.com/dwaynemac/padma-tools",
+  "repository": "https://github.com/dwaynemac/padma-ai-plugins",
   "keywords": [
     "learn",
     "teachers",

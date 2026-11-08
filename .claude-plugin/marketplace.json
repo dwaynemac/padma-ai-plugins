@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "padma-tools",
+  "name": "padma-ai-plugins",
   "description": "Plugins for working with PADMA CRM, Money, and Learn from Claude Code.",
   "owner": {
     "name": "PADMA"
