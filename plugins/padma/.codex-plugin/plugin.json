@@ -1,7 +1,7 @@
 {
   "name": "padma",
-  "version": "0.1.16+codex.20261108210114",
-  "description": "Coordinate safe CRM and Money workflows, including CRM tag assignments and Operations project sections, enriched contacts and plans with payment debt over explicit monthly ranges, through one client-oriented skill. Prefer and attempt MCP first; CRM browser access requires an explicit user request and preserves authorization and data restrictions.",
+  "version": "0.1.17+codex.20261108211020",
+  "description": "Coordinar CRM, Money y Learn mediante sus plugins MCP: relacionar alumnos y contactos con identificadores verificados, consultar accesos y asistencia, actividad comercial, planes y movimientos financieros, conservando organizaciones, permisos y fuentes independientes.",
   "author": {
     "name": "PADMA"
   },
@@ -11,14 +11,15 @@
     "padma",
     "crm",
     "money",
+    "learn",
     "business",
     "coordination"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "PADMA",
-    "shortDescription": "Trabaj\u00e1 con CRM y Money desde un agente",
-    "longDescription": "Ense\u00f1a a Codex cu\u00e1ndo usar los plugins CRM y Money, c\u00f3mo trabajar con actividad de contactos, analizar rankings de marketing y bajas, elegir entre seguimiento comercial actual y conversi\u00f3n hist\u00f3rica, y relacionar contactos mediante su PADMA ID con el docente, Learn ID, LTV y plan actual de Money sin mezclar cuentas, identificadores locales ni fuentes de verdad. Para deudas de pagos, coordina b\u00fasquedas de planes en Money con un rango mensual expl\u00edcito. Permite agregar o quitar etiquetas existentes de contactos cuando el servidor CRM expone esas herramientas. Permite crear y ordenar secciones de proyectos operativos mediante CRM MCP 1.20.0 o posterior cuando las herramientas est\u00e1n disponibles y el usuario tiene permiso. Prioriza e intenta primero MCP. Para CRM, permite navegador solo ante solicitud expl\u00edcita, con los mismos l\u00edmites de cuenta, permisos, datos y confirmaciones.",
+    "shortDescription": "Coordiná CRM, Money y Learn desde un agente",
+    "longDescription": "Coordina los plugins CRM, Money y Learn sin declarar servidores MCP propios. Relaciona alumnos de Learn con contactos CRM mediante learn_user_id y con contactos y movimientos Money mediante padma_id. Verifica cada vínculo dentro de organizaciones autorizadas de forma independiente y conserva las reglas de cada producto para contactos, actividad comercial, proyectos operativos, deuda de planes, accesos, suscripciones, cursos y asistencia. Prioriza MCP; el navegador para CRM requiere solicitud explícita y respeta los límites de padma-crm.",
     "developerName": "PADMA",
     "category": "Productivity",
     "capabilities": [
@@ -26,14 +27,15 @@
     ],
     "websiteURL": "https://derose.app/",
     "defaultPrompt": [
+      "Relacioná este alumno de Learn con su contacto CRM y revisá sus accesos y movimientos en Money.",
       "Mostrame los planes con deuda de pagos de enero a marzo de 2026, incluidos los que ya terminaron.",
       "Dame un panorama comercial y financiero de mi escuela este mes.",
-      "Busc\u00e1 un contacto en CRM y revis\u00e1 sus movimientos en Money.",
-      "Busc\u00e1 un contacto en CRM y revis\u00e1 su docente, Learn ID, LTV y plan actual en Money.",
-      "Compar\u00e1 el funnel hist\u00f3rico de conversi\u00f3n con los ingresos del \u00faltimo trimestre.",
-      "Relacion\u00e1 la conversi\u00f3n por m\u00e9todo de marketing con los ingresos del mismo per\u00edodo.",
+      "Buscá un contacto en CRM y revisá sus movimientos en Money.",
+      "Buscá un contacto en CRM y revisá su docente, Learn ID, LTV y plan actual en Money.",
+      "Compará el funnel histórico de conversión con los ingresos del último trimestre.",
+      "Relacioná la conversión por método de marketing con los ingresos del mismo período.",
       "Mostrame las etapas actuales de seguimiento comercial y sus contactos.",
-      "Cre\u00e1 una secci\u00f3n Revisi\u00f3n en el proyecto seleccionado y orden\u00e1 sus secciones conservando las existentes."
+      "Creá una sección Revisión en el proyecto seleccionado y ordená sus secciones conservando las existentes."
     ]
   }
 }

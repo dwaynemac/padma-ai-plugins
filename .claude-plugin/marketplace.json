@@ -24,7 +24,7 @@
     {
       "name": "padma",
       "source": "./plugins/padma",
-      "description": "Coordinate safe CRM and Money workflows, including CRM Operations project sections, enriched contacts and plans with payment debt over explicit monthly ranges, through one client-oriented skill."
+      "description": "Coordinar CRM, Money y Learn mediante sus plugins MCP: relacionar alumnos y contactos con identificadores verificados, consultar accesos y asistencia, actividad comercial, planes y movimientos financieros, conservando organizaciones, permisos y fuentes independientes."
     }
   ]
 }

@@ -6,7 +6,7 @@
 2. Confirm one common calendar period.
 3. In CRM, use persisted monthly statistics, comparisons, `get_marketing_method_statistics`, `get_dropout_reason_statistics`, or `get_lead_funnel` for the historical commercial context that matches the question. Use `get_commercial_funnel` only when the overview also needs the contacts requiring follow-up now.
 4. In Money, use category subtotals and deterministic movement analysis for financial context.
-5. Present separate CRM and Money evidence before offering a combined interpretation.
+5. Si el panorama incluye actividad educativa, consultá Learn mediante `padma-learn` y conservá escuela, período, timezone y filtros de sus reportes. Presentá por separado la evidencia de cada producto antes de interpretarla.
 6. Label CRM missing months, Money date basis, pagination, currencies, freshness, and material filters.
 
 Do not imply that commercial changes caused financial changes solely because the periods align. Describe correlation as interpretation unless the returned data directly establishes a relationship.
@@ -35,6 +35,55 @@ Money search_movements(business_id: selected_money_business, contact_padma_id: c
 Absence from one account or Business does not prove that the person does not exist elsewhere. A CRM student status does not prove payment, and a Money plan does not prove learning access.
 
 Treat every nullable Money contact enrichment independently. Do not turn a missing `teacher`, `learn_id`, `ltv`, or `current_plan` into a claim about CRM relationship data, Learn access, or realized payments. When presenting LTV, retain its exact cents and currency.
+
+## Relacionar un alumno de Learn con CRM y Money
+
+1. Descubrí y seleccioná las organizaciones por separado: CRM `list_accounts`,
+   Learn `list_accounts` y Money `list_businesses`, con sus consultas de contexto.
+   Usá sólo los productos necesarios para la solicitud.
+2. Si comenzás en Learn, usá `list_users` y luego `get_user(user_id: ...)` para
+   confirmar el alumno dentro de la escuela. El `id` de un item de `list_users`
+   es `accounts_user_id`, no `user_id`; este último puede ser nulo para una
+   invitación pendiente. No intentes resolver esa invitación como alumno activo.
+3. Buscá candidatos en CRM con los filtros de identidad realmente disponibles,
+   usando sólo los datos necesarios devueltos por Learn. Pedí
+   `response_fields: ["learn_user_id"]`. Confirmá el contacto comparando ese
+   campo con el `user_id` de Learn; el nombre o email por sí solos no prueban el
+   vínculo. Si no hay filtro exacto por Learn ID, recorré las páginas necesarias
+   y compará los valores devueltos, sin inventar parámetros de búsqueda.
+4. Si comenzás en CRM, pedí el mismo campo en `get_contact` o `search_contacts`
+   y usá su valor no nulo en Learn `get_user`, con el `account_name` de Learn.
+   Una lectura exitosa verifica el alumno y su acceso en esa escuela; el ID
+   guardado en CRM por sí solo no confirma su acceso educativo actual.
+5. Con el `padma_id` del contacto CRM confirmado, usá Money
+   `search_contacts(padma_id: ...)` y, si corresponde, `search_movements` con
+   `contact_padma_id` y período explícito, siempre en el negocio seleccionado.
+   Conservá las reglas de [contactos y pagos](#contact-and-payment-questions).
+6. Si comenzás en Money, verificá su `padma_id` en CRM `get_contact` con
+   `response_fields: ["learn_user_id"]` y continuá hacia Learn. El `learn_id`
+   nullable de Money es una referencia adicional: no lo sustituyas por
+   `padma_id`, `accounts_user_id` ni un ID local de contacto. Contrastalo con
+   el vínculo CRM y la lectura Learn antes de presentar una identidad conjunta.
+7. Si falta el vínculo, hay varios contactos para el mismo alumno, los IDs no
+   coinciden o un producto devuelve `not_found`/`forbidden`, informá qué parte
+   no pudo confirmarse. No crees contactos, invites alumnos ni repares vínculos
+   como efecto implícito de una consulta. No pruebes otras escuelas por el error.
+
+El recorrido confirmado desde CRM usa identificadores diferentes:
+
+```text
+CRM get_contact(account_name: crm_account, padma_id: confirmed_padma_id,
+                response_fields: ["learn_user_id"])
+  -> contact.learn_user_id
+Learn get_user(account_name: learn_account, user_id: contact.learn_user_id)
+Money search_contacts(business_id: money_business, padma_id: confirmed_padma_id)
+```
+
+Consultá accesos, cursos, suscripciones y asistencia actuales en Learn según
+`padma-learn`. Un `learn_activity_summary` leído en CRM es un snapshot guardado,
+no una consulta actual a Learn. Un plan o pago de Money no prueba acceso a
+contenido ni asistencia; una suscripción Learn no prueba un movimiento
+financiero registrado en Money. Conservá fuente, fecha, timezone y cobertura.
 
 ## Deuda de pagos de planes
 
@@ -79,6 +128,14 @@ Follow the `padma-crm` skill and keep the selected `account_name`:
 
 Do not treat CRM contact creation as permission to create a related Money contact or record.
 
+### Escrituras Learn
+
+Seguí `padma-learn` para la operación explícitamente solicitada, sus efectos,
+permisos, idempotencia, control de revisión y lectura posterior. Una consulta
+combinada no autoriza sincronizar identidades, accesos o cobros. Ante una
+escritura fallida en otro producto, informá los resultados parciales; no
+prometas atomicidad ni ejecutes compensaciones no solicitadas.
+
 ### Money writes
 
 1. Search and fetch the intended Money records inside the selected Business.
@@ -100,6 +157,7 @@ Lead with the outcome, then keep sources auditable:
 
 CRM account: <account_name>
 Money Business: <business>
+Learn school: <account_name, si se usó>
 Period: <inclusive period>
 
 ### Commercial and contacts — CRM
@@ -107,6 +165,9 @@ Period: <inclusive period>
 
 ### Financial — Money
 <confirmed totals/findings, date basis, currencies, filters>
+
+### Educational access and activity — Learn
+<accesos, cursos o asistencia confirmados, período, timezone y filtros; si se usó>
 
 ### Interpretation
 <clearly labeled cross-product observations>

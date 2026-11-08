@@ -1,7 +1,7 @@
 interface:
   display_name: "PADMA Assistant"
-  short_description: "Coordinar CRM, Money y deuda de pagos"
-  default_prompt: "Usá $padma-assistant para crear y ordenar secciones de proyectos mediante CRM, gestionar etiquetas existentes de contactos mediante CRM o identificar planes con deuda de pagos en un rango mensual explícito, incluidos los que ya terminaron, conservando el negocio y todos los filtros al paginar. Priorizá e intentá primero el MCP; usá el navegador para CRM solo ante solicitud explícita y bajo las condiciones de padma-crm."
+  short_description: "Coordinar CRM, Money y Learn por alumno"
+  default_prompt: "Usá $padma-assistant para relacionar un alumno de Learn con su contacto CRM y su situación financiera en Money, verificando identificadores y organizaciones mediante los MCP de cada producto."
 
 dependencies:
   tools:
@@ -15,3 +15,8 @@ dependencies:
       description: "Servidor MCP remoto de PADMA Money"
       transport: "streamable_http"
       url: "https://money.derose.app/mcp"
+    - type: "mcp"
+      value: "learn"
+      description: "Servidor MCP de administración docente de Learn"
+      transport: "streamable_http"
+      url: "https://learn.derose.app/mcp"

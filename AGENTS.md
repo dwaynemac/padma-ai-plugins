@@ -59,8 +59,8 @@ delgados: describen conexiones, contexto y workflows seguros.
 - `money` es dueño de la conexión `money` y de los workflows financieros.
 - `learn` es dueño de la conexión `learn` y de la administración docente de
   publicaciones, alumnos, accesos, suscripciones, cursos y asistencia.
-- `padma` coordina CRM y Money. No declara un servidor MCP propio ni duplica los
-  servidores de los plugins de producto.
+- `padma` coordina CRM, Money y Learn. No declara un servidor MCP propio ni
+  duplica los servidores de los plugins de producto.
 - No publiques el mismo servidor MCP desde más de un plugin. Las dependencias
   declaradas por una skill coordinadora no transfieren la propiedad del
   servidor.

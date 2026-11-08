@@ -12,7 +12,7 @@ PADMA is a modular suite for operating schools and boutique studios. Each produc
 | Which contacts need follow-up now, and how are acquisition, dropout, and historical commercial metrics evolving | CRM | Yes, through live commercial stages, marketing-method and dropout-reason rankings, and monthly lead-funnel analysis |
 | How operational projects, sections, tasks, and conversations are organized | CRM | Yes, authorized project and task management; section creation and ordering through CRM MCP 1.20.0 or later |
 | What income, expenses, movements, plans, and financial rules exist | Money | Yes, read and supported writes |
-| What content, classes, bookings, or check-ins exist | Learn | No |
+| Alumnos, accesos, suscripciones, publicaciones, cursos, reservas, check-ins y reportes de asistencia | Learn | Sí, mediante el MCP docente y la skill `padma-learn` |
 | Certificates, office stock/sales, manuals, or branded links | Specialized DeROSE Apps | No |
 
 ## Ownership rules
@@ -26,4 +26,4 @@ PADMA is a modular suite for operating schools and boutique studios. Each produc
 
 Speak in terms of the user's school, contacts, commercial activity, and finances. Avoid repository names, models, routes, ports, database IDs, or internal architecture unless the user explicitly asks as a developer.
 
-When a requested domain is unavailable, identify the owning PADMA product and state that the available companion plugins connect only CRM and Money. Do not answer with guessed data from another product.
+When a requested domain is unavailable, identify the owning PADMA product and identify which required companion plugin (`crm`, `money` or `learn`) is missing or which capability is unsupported. Do not answer with guessed data from another product.

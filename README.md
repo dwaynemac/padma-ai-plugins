@@ -3,6 +3,9 @@
 Plugins y skills para que los usuarios de [PADMA](https://derose.app/) puedan
 trabajar con sus datos desde Codex y Claude Code.
 
+**Nota:** el repositorio y el marketplace antes se llamaban `padma-tools`.
+El nombre actual de ambos es `padma-ai-plugins`.
+
 Este repositorio publica catálogos específicos para cada cliente. Ambos
 instalan los mismos plugins, skills y conexiones MCP con las aplicaciones de
 PADMA.
@@ -16,10 +19,9 @@ Incluye tres integraciones MCP independientes:
 - [`learn`](#learn), para administrar publicaciones, alumnos, accesos,
   suscripciones, cursos y asistencia de una escuela en Learn.
 
-Instalá CRM y Money si necesitás trabajar entre ambos productos; instalá sólo el
-plugin correspondiente cuando tu consulta pertenezca a un único producto.
-Learn se instala de forma independiente; el coordinador `padma` conserva su
-alcance de CRM y Money.
+Instalá los plugins de los productos que necesites y agregá `padma` para
+coordinar consultas entre CRM, Money y Learn. Si tu consulta pertenece a un
+único producto, alcanza con su plugin.
 
 Cada directorio bajo `plugins/` también publica el contrato portable de
 [Agent Plugins 1.0](https://agent-plugins.org/) mediante un `plugin.json`, sus
@@ -59,7 +61,7 @@ claude plugin install learn@padma-ai-plugins
 claude plugin install padma@padma-ai-plugins
 ```
 
-El plugin `padma` sólo coordina los otros dos: no declara servidores MCP. Para
+El plugin `padma` coordina CRM, Money y Learn: no declara servidores MCP. Para
 usar un solo producto, instalá únicamente su plugin:
 
 ```bash
@@ -120,10 +122,10 @@ y la [guía de reportes](plugins/learn/skills/padma-learn/references/reports.md)
 
 ### PADMA
 
-Coordina los plugins CRM y Money para trabajar con la situación comercial y
-financiera de una escuela sin perder los límites entre productos. No declara
-servidores MCP propios: las herramientas son provistas exclusivamente por los
-plugins `crm` y `money`.
+Coordina los plugins CRM, Money y Learn para trabajar con la situación
+comercial, financiera y educativa de una escuela sin perder los límites entre
+productos. No declara servidores MCP propios: las herramientas son provistas
+por los plugins `crm`, `money` y `learn`, instalados por separado.
 
 Permite:
 
@@ -132,8 +134,9 @@ Permite:
 - consultar y administrar las operaciones financieras disponibles en Money;
 - relacionar un contacto confirmado en CRM con su registro, docente, Learn ID, LTV, plan actual y movimientos de Money mediante el `padma_id` compartido;
 - preparar panoramas combinados con períodos, organizaciones y fuentes claras;
-- reconocer cuándo una solicitud pertenece a Learn u otra app que
-  todavía no está conectada por este plugin.
+- relacionar alumnos de Learn con contactos CRM y Money mediante vínculos verificados;
+- consultar accesos, suscripciones, cursos y asistencia mediante la skill docente de Learn;
+- reconocer capacidades no disponibles o plugins que faltan.
 
 El plugin incluye la skill `padma-assistant`, una versión orientada al usuario
 final del mapa de ecosistema que usan los developers. Evita detalles de
@@ -142,19 +145,21 @@ correcto y a no mezclar tenants, identificadores, monedas ni fechas.
 
 #### Elegir el modo de instalación
 
-- Instalá `crm` y `money` para disponer de sus herramientas MCP.
-- Instalá también `padma` cuando quieras que el agente coordine ambos productos.
-- Instalá sólo `crm` o `money` cuando necesites un único producto.
+- Instalá `crm`, `money` y/o `learn` según los productos que necesites consultar.
+- Agregá `padma` para coordinar los productos instalados.
+- Para un único producto, instalá sólo su plugin.
 
 #### Configurar el acceso
 
-1. Instalá `crm`, `money` y `padma`, e iniciá una tarea nueva.
-2. Conectá CRM y Money cuando el cliente lo solicite. Cada servidor tiene su
-   propio recurso y grant OAuth; ambos usan DCR y PKCE sin Client Secret.
+1. Instalá `padma` y los plugins de producto necesarios, e iniciá una tarea nueva.
+2. Conectá cada MCP cuando el cliente lo solicite. Cada servidor tiene su
+   propio recurso y grant OAuth; seguí la configuración de su plugin.
 3. Autorizá las organizaciones necesarias en cada producto.
-4. Verificá CRM con `Listá las cuentas de CRM que tengo autorizadas.`
-5. Verificá Money con `Listá los negocios de Money que tengo autorizados.`
-6. Para un análisis combinado, seleccioná la organización de cada producto de
+4. Si usás CRM, verificá con `Listá las cuentas de CRM que tengo autorizadas.`
+5. Si usás Money, verificá con `Listá los negocios de Money que tengo autorizados.`
+6. Si usás Learn, verificá con `Listá mis escuelas autorizadas de Learn.` y
+   consultá `get_account_context` de la escuela elegida.
+7. Para un análisis combinado, seleccioná la organización de cada producto de
    forma independiente; nombres parecidos no prueban que sean el mismo tenant.
 
 #### Relacionar un contacto entre CRM y Money
@@ -175,6 +180,28 @@ correcto y a no mezclar tenants, identificadores, monedas ni fechas.
 Que no haya coincidencia en un negocio no prueba que el contacto no exista en
 otro. CRM sigue siendo la fuente de relación y actividad del contacto; Money,
 la fuente de planes y movimientos financieros.
+
+#### Relacionar un alumno de Learn con CRM y Money
+
+1. Seleccioná por separado la escuela Learn, la cuenta CRM y el negocio Money
+   entre las organizaciones autorizadas por cada MCP.
+2. Si partís de Learn, confirmá el alumno con `list_users` y `get_user` usando
+   su `user_id`. El `id` del acceso escolar es `accounts_user_id`; no lo uses
+   como ID de alumno. Una invitación pendiente puede no tener `user_id`.
+3. Buscá candidatos en CRM con `response_fields: ["learn_user_id"]` y verificá
+   que ese campo coincida con el `user_id` de Learn. Si partís de CRM, usá ese
+   campo en Learn `get_user` para verificar su acceso en la escuela seleccionada.
+4. Usá el `padma_id` del contacto CRM confirmado para consultar su contacto o
+   movimientos en Money, como en el recorrido anterior.
+5. Si partís de Money, verificá primero su `padma_id` en CRM y continuá hacia
+   Learn. Contrastá cualquier `learn_id` de Money con el vínculo CRM y la
+   consulta Learn; no deduzcas el vínculo por nombre o email solamente.
+
+Si falta un vínculo o hay resultados contradictorios, el agente informa qué
+parte no pudo confirmar. La consulta no crea ni fusiona contactos, invita
+alumnos ni modifica vínculos. Learn es la fuente del acceso y actividad
+educativa actual; el resumen guardado en CRM y los planes Money no prueban ese
+acceso. Consultá el [workflow completo](plugins/padma/skills/padma-assistant/references/cross-product-workflows.md#relacionar-un-alumno-de-learn-con-crm-y-money).
 
 ### Money
 
@@ -263,7 +290,7 @@ en mi cuenta seleccionada”. Antes verifica identidad, cuenta y permisos en la
 sesión de CRM. La excepción mantiene el alcance solicitado, la minimización de
 datos y las confirmaciones de escritura; no permite eludir denegaciones,
 autenticación, permisos ni restricciones de documentos gubernamentales. Sin esa
-solicitud no cambia automáticamente de vía. Money conserva acceso solo por MCP.
+solicitud no cambia automáticamente de vía. Money y Learn conservan acceso solo por MCP.
 
 #### Configurar el acceso
 
@@ -289,7 +316,8 @@ Se pueden publicar comentarios; no se pueden editar ni eliminar mediante MCP.
 
 ### PADMA
 
-- “Dame un panorama comercial y financiero de mi escuela este trimestre.”
+- “Relacioná este alumno de Learn con su contacto CRM y revisá sus accesos y movimientos en Money.”
+- “Dame un panorama comercial, financiero y de asistencia de mi escuela este trimestre.”
 - “¿La mejora del funnel coincide con mayores ingresos? Separá hechos de interpretación.”
 - “Buscá este contacto en CRM y revisá si tiene movimientos relacionados en Money.”
 - “Tomá el `padma_id` de este contacto de CRM y listá sus movimientos de Money del último año.”
@@ -359,6 +387,7 @@ plugins/                           plugins instalables
     .claude-plugin/plugin.json     manifiesto de Claude Code
   money/                           integración MCP con PADMA Money
   crm/                             integración MCP con PADMA CRM
+  learn/                           integración MCP docente con Learn
 ```
 
 Los catálogos no son intercambiables: cada cliente usa un esquema de

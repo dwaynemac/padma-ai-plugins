@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "padma",
-  "version": "0.1.16+codex.20261108210114",
-  "description": "Coordinate safe CRM and Money workflows, including CRM tag assignments and Operations project sections, enriched contacts and plans with payment debt over explicit monthly ranges, through one client-oriented skill. Prefer and attempt MCP first; CRM browser access requires an explicit user request and preserves authorization and data restrictions.",
+  "version": "0.1.17+codex.20261108211020",
+  "description": "Coordinar CRM, Money y Learn mediante sus plugins MCP: relacionar alumnos y contactos con identificadores verificados, consultar accesos y asistencia, actividad comercial, planes y movimientos financieros, conservando organizaciones, permisos y fuentes independientes.",
   "author": {
     "name": "PADMA"
   },
@@ -12,6 +12,7 @@
     "padma",
     "crm",
     "money",
+    "learn",
     "business",
     "coordination"
   ]
