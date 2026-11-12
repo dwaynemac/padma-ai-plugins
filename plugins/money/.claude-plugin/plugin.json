@@ -1,6 +1,6 @@
 {
   "name": "money",
-  "version": "0.1.12+codex.20261108210114",
+  "version": "0.1.13+codex.20261112115424",
   "description": "Consult account balances at a date, enriched contacts and plans with payment debt over an explicit monthly range, and manage authorized PADMA Money businesses safely through its remote MCP server.",
   "author": {
     "name": "PADMA"

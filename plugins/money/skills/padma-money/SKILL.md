@@ -44,7 +44,7 @@ Usá `get_account_balance` con un `account_id` obtenido de `list_accounts` y `da
 
 Usá `search_plans(has_debt: true, from: ..., to: ...)` con ambos extremos de un rango mensual inclusivo de hasta 36 meses. `has_debt: false` devuelve los planes activos en ese rango sin meses que cumplan el criterio de deuda; omitirlo permite ver todos los planes activos en el rango. Conservá `business_id` y todos los filtros al paginar. `active_on` sigue disponible por separado y no se combina con el rango.
 
-Seguí el contrato y los ejemplos de [references/mcp-operations.md](references/mcp-operations.md#deuda-de-pagos-en-search_plans). Puede incluir planes que ya terminaron. El mes actual participa después de su primer día; no infieras deuda por saldo de cuenta ni un importe adeudado a partir de este filtro.
+Seguí el contrato y los ejemplos de [references/mcp-operations.md](references/mcp-operations.md#deuda-de-pagos-en-search_plans). Puede incluir planes que ya terminaron. El mes actual participa después del día de vencimiento configurado en el plan; si no está configurado, conserva el criterio de después del primer día; no infieras deuda por saldo de cuenta ni un importe adeudado a partir de este filtro.
 
 ## Movement permalinks
 
