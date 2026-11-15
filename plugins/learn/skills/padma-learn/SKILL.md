@@ -1,6 +1,6 @@
 ---
 name: padma-learn
-description: "Administrar una escuela de PADMA Learn o Learn DeROSE mediante su MCP docente: publicaciones, alumnos y accesos, suscripciones, cursos y miembros, reservas, check-ins y reportes de asistencia. Usar para solicitudes de gestión de teachers o administradores de escuela. Las reservas personales de un alumno usan la integración de alumnos, no este MCP."
+description: "Administrar una escuela de PADMA Learn o Learn DeROSE mediante su MCP docente: publicaciones, alumnos y accesos, suscripciones, cursos con módulos y miembros, reservas y sus precios para invitados, check-ins y reportes de asistencia. Usar para solicitudes de gestión de teachers o administradores de escuela. Las reservas personales de un alumno usan la integración de alumnos, no este MCP."
 ---
 
 # Administrar Learn
@@ -36,12 +36,19 @@ una consulta contextual.
   soportada. Los accesos a la escuela, los permisos de contenido y las
   inscripciones a cursos tienen efectos distintos. No crees teachers, cambies
   roles administrativos ni borres identidades de alumno.
-- **Cursos:** administrá sus datos, contenido, orden y miembros. Antes de quitar
-  un miembro, verificá si el acceso proviene de una suscripción o plantilla; no
-  uses otro permiso para eludir una restricción del servidor.
+- **Cursos:** administrá sus datos, módulos, contenido, orden y miembros. Para
+  crear, renombrar, reordenar o eliminar módulos y asignarles contenido, seguí
+  [módulos de cursos](references/mcp-operations.md#módulos-de-cursos).
+  Antes de quitar un miembro, verificá si el acceso proviene de una suscripción
+  o plantilla; no uses otro permiso para eludir una restricción del servidor.
 - **Suscripciones:** leé [suscripciones](references/subscriptions.md) antes de
   modificar cobros, cancelaciones, cambios programados o reembolsos. El servidor
   conserva las reglas de Stripe/MercadoPago y de las suscripciones manuales.
+- **Precios para invitados:** consultá el default de la escuela y el precio
+  efectivo de la clase antes de cambiarlos. Usá templates elegibles de esa
+  escuela; sin cobro, la reserva conserva confirmación manual. Seguí
+  [precios de reservas de invitados](references/mcp-operations.md#precios-de-reservas-de-invitados)
+  para elegir entre heredar, sin costo o template específico.
 - **Reservas y check-ins:** distinguí la reserva de una plaza de la asistencia
   registrada. Usá `mark_booking_attended` sólo cuando se solicita registrar la
   asistencia. Crear una reserva pasada puede generar un check-in

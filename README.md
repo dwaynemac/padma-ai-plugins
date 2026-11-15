@@ -17,7 +17,7 @@ Incluye tres integraciones MCP independientes:
 - [`money`](#money), para cuentas, planes, presupuestos y movimientos
   financieros en PADMA Money.
 - [`learn`](#learn), para administrar publicaciones, alumnos, accesos,
-  suscripciones, cursos y asistencia de una escuela en Learn.
+  suscripciones, cursos con módulos y asistencia de una escuela en Learn.
 
 Instalá los plugins de los productos que necesites y agregá `padma` para
 coordinar consultas entre CRM, Money y Learn. Si tu consulta pertenece a un
@@ -88,9 +88,22 @@ Conecta al teacher con la administración de sus escuelas en
 admita el scope `learn`; instalar este paquete no despliega esos cambios.
 
 Permite administrar publicaciones con contenido y enlaces suministrados,
-alumnos y accesos, suscripciones, cursos y sus miembros, reservas y check-ins.
+alumnos y accesos, suscripciones, cursos con módulos y sus miembros, reservas y check-ins.
 Incluye reportes estructurados de check-ins, reservas, distribución de check-ins
 y clases por instructor, conservando permisos, períodos y filtros de `/admin`.
+
+Cuando el servidor conectado expone las tools de precios para invitados, permite
+consultar y cambiar el default escolar, listar templates de pago elegibles y
+configurar cada clase para heredar, ser sin costo o usar un template específico.
+Las lecturas muestran el precio efectivo; sin cobro se conserva la confirmación
+manual. Actualizar el plugin no despliega estas capacidades en Learn.
+
+Cuando el servidor conectado anuncia las tools de módulos, permite crearlos,
+renombrarlos, reordenarlos y eliminarlos, además de asignar o quitar contenido
+de cada módulo. Eliminar un módulo conserva sus publicaciones en el curso sin
+módulo. Estas operaciones requieren el soporte correspondiente desplegado en
+Learn; el plugin comprueba las tools y campos disponibles antes de usarlos.
+
 Las operaciones de suscripciones respetan las reglas existentes de Stripe,
 MercadoPago y suscripciones manuales.
 

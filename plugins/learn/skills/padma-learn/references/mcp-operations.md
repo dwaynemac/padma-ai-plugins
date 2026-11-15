@@ -51,14 +51,16 @@ la conexión.
 | Alumnos | `list_users`, `get_user`, `invite_user` |
 | Accesos | `update_user_access`, `list_access_templates`, `apply_access_template`, grants y shares con sus tools de creación/edición/eliminación |
 | Cursos | `list_courses`, `get_course`, `create_course`, `update_course`, `delete_course`; `list_course_content`, `set_course_content`, `remove_course_content`; `list_course_members`, `set_course_member`, `remove_course_member` |
+| Módulos de cursos | `list_course_modules`, `get_course_module`, `create_course_module`, `update_course_module`, `delete_course_module`; asignación mediante `set_course_content` |
 | Suscripciones | `list_subscriptions`, `get_subscription` y las operaciones específicas de [suscripciones](subscriptions.md) |
 | Reservas | `list_bookings`, `get_booking`, `create_booking`, `update_booking`; `confirm_booking`, `cancel_booking`, `late_cancel_booking`, `promote_booking`, `mark_booking_attended`, `mark_booking_no_show`; tools de reservas recurrentes |
+| Precios para invitados | `get_guest_booking_config`, `update_guest_booking_config`, `list_guest_booking_payment_templates`; precios por clase mediante `create_post` / `update_post` |
 | Check-ins | `list_check_ins`, `get_check_in`, `create_check_in`, `update_check_in`, `delete_check_in` |
 | Reportes | Consultar las cuatro vistas descritas en [reportes](reports.md) |
 
 Para actualizar un miembro o vínculo de contenido existente mediante
 `set_course_member` o `set_course_content`, usá el `updated_at` de ese vínculo,
-no el del curso ni el de la publicación. El orden se cambia con
+no el del curso ni el de la publicación. El orden del contenido se cambia con
 `set_course_content(order_position: ...)`; no existe una tool independiente
 de reordenamiento. El curso debe usar `order_by: "order_position"` para mostrar
 ese orden manual; verificá también `order_direction` antes de cambiar posiciones.
@@ -80,6 +82,91 @@ del acceso escolar, aunque agregue permisos nuevos.
 La v1 no automatiza duplicación avanzada, creación/vinculación de híbridos,
 reuniones Zoom ni obtención de grabaciones. No reemplaces esas funciones con
 cambios de campos internos.
+
+## Módulos de cursos
+
+Comprobá que el servidor conectado anuncie las cinco tools de módulos y el campo
+`course_module_id` de `set_course_content`. Actualizar el plugin no despliega
+Learn; si faltan, informá qué capacidad sigue pendiente.
+
+Las tools de módulos requieren `course_id` de un curso propio de la escuela
+seleccionada y conservan los permisos docentes. Elegí el módulo dentro de ese
+curso; un módulo de otro curso, incluso de la misma escuela, no sirve.
+
+| Tool | Uso |
+| --- | --- |
+| `list_course_modules` | Lista módulos con paginación por ID; recorré todas las páginas y ordená por `position`, luego `id`, para mostrar el curso |
+| `get_course_module` | Lee un módulo mediante `course_module_id` |
+| `create_course_module` | Crea con `title` obligatorio y `position` entero no negativo opcional (default 0) |
+| `update_course_module` | Cambia `title` y/o `position`; requiere `course_module_id` y el `expected_updated_at` del módulo |
+| `delete_course_module` | Elimina mediante `course_module_id` y la revisión del módulo; conserva las publicaciones en el curso, sin módulo |
+
+Las lecturas y las creaciones/ediciones devuelven `id`, `work_group_id`, `title`,
+`position` y `updated_at`; las respuestas individuales usan `course_module` y
+la lista usa `items`. La eliminación devuelve `deleted_course_module_id`.
+Todas las escrituras requieren `request_id` según el contrato común. Estas
+tools no exponen progreso por alumno.
+
+`set_course_content` acepta `course_module_id` al agregar o editar el vínculo
+entre curso y publicación. Usá un ID del mismo curso para asignar o mover,
+`null` para dejar sin módulo y omití el campo para conservar la asignación
+existente. Un vínculo nuevo sin ese campo queda sin módulo. Las respuestas de
+`list_course_content` y `set_course_content` incluyen `course_module_id`, que
+puede ser nulo. La asignación no altera la publicación en otros cursos.
+
+Al editar un vínculo existente, incluso sólo para cambiar su módulo, enviá el
+`expected_updated_at` del vínculo de contenido, no el del módulo ni del curso.
+Eliminar un módulo también invalida las revisiones de sus vínculos al quitarles
+la asignación: releé el contenido antes de volver a editarlo. Verificá cada
+cambio mediante la lectura del módulo o del contenido correspondiente.
+
+## Precios de reservas de invitados
+
+Comprobá que el servidor conectado anuncie estas tools y campos en su schema.
+Actualizar el plugin no despliega Learn; si faltan, informá la capacidad pendiente.
+
+- `get_guest_booking_config` devuelve `guest_booking_config`: default escolar,
+  `updated_at`, `payment_template_id`, resumen `payment_template` y
+  `payment_template_eligible`. Leer una escuela sin configuración no crea
+  registros: su ID, revisión y template son nulos.
+- `list_guest_booking_payment_templates` lista los templates existentes,
+  elegibles y autorizados de esa escuela, con paginación. Devuelve importe en
+  `amount_cents`, moneda en `amount_currency` y resumen del gateway; no crea
+  templates ni cambia sus precios. Elegí el ID de esta lista.
+- `update_guest_booking_config` cambia sólo el default escolar mediante
+  `payment_template_id`; `null` lo elimina. Usá el `updated_at` de la
+  configuración como `expected_updated_at`, no el de la escuela o del template.
+  Enviá una revisión explícitamente nula sólo si la lectura anterior no encontró
+  configuración. Aplican `request_id`, replay y conflictos del contrato común.
+
+Para clases `Live` e `InPersonLive` propias, `create_post` y `update_post` aceptan:
+
+| Campo | Comportamiento |
+| --- | --- |
+| `guest_booking_payment_mode: "inherit"` | Usa el default escolar; sin default no cobra |
+| `guest_booking_payment_mode: "free"` | Sin costo aunque haya un default escolar |
+| `guest_booking_payment_mode: "custom"` | Usa `guest_booking_payment_template_id`, que debe ser elegible y de esa escuela |
+
+Al cambiar a `inherit` o `free`, podés enviar
+`guest_booking_payment_template_id: null` para quitar la selección guardada.
+No asignes templates de otra escuela en ningún modo. Al actualizar una clase,
+usá la revisión del post como `expected_updated_at`.
+
+`get_post`, `list_posts` y los resultados de escritura incluyen
+`guest_booking_pricing` para clases propias: `mode`, `payment_template_id`,
+`status`, `confirmation` y `effective_payment_template`. Este último contiene
+el precio efectivo (`amount_cents` y `amount_currency`), el template y su gateway.
+Con `status: "valid"`, `confirmation` es `"payment"` o `"manual"`.
+Con `status: "invalid"`, la confirmación es `"unavailable"` y el template
+efectivo es nulo: no lo interpretes como una clase gratis.
+
+Un default con `payment_template_eligible: false` requiere corrección; ese campo
+es nulo cuando no hay default. Las lecturas no exponen datos de templates o
+gateways ajenos aunque una referencia histórica haya quedado inválida.
+Estas escrituras configuran futuras reservas de invitados: sin cobro conservan
+confirmación manual, no cobran al visitante ni modifican pagos ya creados o
+reservas ordinarias de alumnos. Releé la configuración o clase para verificar
+el cambio y su precio efectivo.
 
 ## Recuperación de errores
 

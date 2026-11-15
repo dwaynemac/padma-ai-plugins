@@ -9,7 +9,7 @@
     {
       "name": "learn",
       "source": "./plugins/learn",
-      "description": "Administer authorized Learn schools: publications, students and access, subscriptions, courses, bookings, check-ins, and attendance reports."
+      "description": "Administer authorized Learn schools through the teacher MCP: publications, students and access, subscriptions, courses, modules and members, bookings, guest booking pricing, check-ins, and attendance reports."
     },
     {
       "name": "money",
