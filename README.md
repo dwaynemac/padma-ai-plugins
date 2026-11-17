@@ -226,6 +226,7 @@ Permite:
 - consultar saldos de cuentas al cierre de una fecha, en la zona horaria del negocio y la moneda de cada cuenta;
 - consultar cuentas, categorías, contactos enriquecidos con docente, Learn ID, LTV y plan actual, y movimientos;
 - identificar planes con o sin deuda de pagos en un rango mensual inclusivo de hasta 36 meses, incluidos planes ya terminados;
+- consultar y ajustar [lo previsto para un mes específico de un plan](plugins/money/skills/padma-money/references/mcp-operations.md#expectativa-de-un-mes-de-un-plan)
 - buscar contactos por `padma_id` exacto y movimientos por `contact_padma_id`;
 - filtrar movimientos por una o más categorías junto con todas sus subcategorías;
 - analizar gastos, ingresos, períodos y posibles anomalías;

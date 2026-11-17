@@ -1,6 +1,6 @@
 ---
 name: padma-money
-description: Use PADMA Money through its remote MCP server to inspect accounts and their balances at a date, categories and their monthly budgets, contacts, movements and their splits, financial reports, recurrent movements, plans with payment debt over a bounded monthly range, and automation rules; create, update, prorate, subdivide, revert splits, soft-delete movements, or delete recurrent movement rules safely. Use for requests such as cuanto gastamos, ingresos del mes, flujo de caja, compara periodos, revisa pagos, configura un presupuesto de categoria, registra un gasto, corrige, categoriza, divide, prorratea o elimina un movimiento, elimina una recurrencia, revierte una division, concilia una cuenta, detecta anomalias, or otherwise consults or manages an organization's financial information stored in Money.
+description: Use PADMA Money through its remote MCP server to inspect accounts and their balances at a date, categories and their monthly budgets, contacts, movements and their splits, financial reports, recurrent movements, plans with payment debt over a bounded monthly range, and automation rules. Edit expectations for individual plan months or create, update, prorate, subdivide, revert splits, soft-delete movements, or delete recurrent movement rules safely. Use for requests such as cuanto gastamos, ingresos del mes, flujo de caja, compara periodos, revisa pagos, configura un presupuesto de categoria, registra un gasto, corrige, categoriza, divide, prorratea o elimina un movimiento, elimina una recurrencia, revierte una division, concilia una cuenta, detecta anomalias, or otherwise consults or manages an organization's financial information stored in Money.
 ---
 
 # Use Money MCP
@@ -45,6 +45,12 @@ Usá `get_account_balance` con un `account_id` obtenido de `list_accounts` y `da
 Usá `search_plans(has_debt: true, from: ..., to: ...)` con ambos extremos de un rango mensual inclusivo de hasta 36 meses. `has_debt: false` devuelve los planes activos en ese rango sin meses que cumplan el criterio de deuda; omitirlo permite ver todos los planes activos en el rango. Conservá `business_id` y todos los filtros al paginar. `active_on` sigue disponible por separado y no se combina con el rango.
 
 Seguí el contrato y los ejemplos de [references/mcp-operations.md](references/mcp-operations.md#deuda-de-pagos-en-search_plans). Puede incluir planes que ya terminaron. El mes actual participa después del día de vencimiento configurado en el plan; si no está configurado, conserva el criterio de después del primer día; no infieras deuda por saldo de cuenta ni un importe adeudado a partir de este filtro.
+
+## Expectativa de un mes de un plan
+
+Consultá `get_plan_month_expectation` con el ID del plan y el mes. El subtotal es compartido por todos los planes activos del mismo contacto y categoría en ese mes. Si encontrás el mismo ID de expectativa en más de un plan, tratá ese subtotal como un solo ajuste.
+
+Antes de usar `update_plan_month_expectation`, mostrá el importe y la moneda actuales y propuestos, el mes y los planes que comparten el subtotal. Explicá que el ajuste deja la expectativa bloqueada manualmente. Una vez confirmado, usá el ID y el `updated_at` de la expectativa y verificá con otra lectura. Si el pedido se refiere a lo recibido en Inicio, verificá ese importe por separado. El subtotal del MCP puede incluir movimientos pendientes. Seguí el [contrato de expectativas mensuales](references/mcp-operations.md#expectativa-de-un-mes-de-un-plan).
 
 ## Movement permalinks
 

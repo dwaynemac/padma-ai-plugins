@@ -101,6 +101,7 @@ It accepts no arguments and returns only locally usable Businesses authorized by
 - `get_recurrent_movement`
 - `search_plans`
 - `get_plan`
+- `get_plan_month_expectation`
 - `search_automation_rules`
 - `get_automation_rule`
 
@@ -167,6 +168,16 @@ Si el plan vence el 10 de septiembre de 2026, septiembre participa desde el día
 
 Las fechas incompletas, inválidas, invertidas por mes, `has_debt` sin rango y las combinaciones con `active_on` devuelven `validation_failed`. Los rangos mayores a 36 meses devuelven `limit_exceeded`. En cada página conservá el negocio, los filtros y el tamaño de página: los cursores firmados están asociados al alcance y a los filtros de la búsqueda. No reutilices un cursor para otro rango o valor de `has_debt`.
 
+### Expectativa de un mes de un plan
+
+`get_plan_month_expectation` requiere `plan_id` y `month` en formato `YYYY-MM-DD`. Cualquier día válido selecciona el mes completo. Devuelve `month_expectation` con `id`, `contact_id`, `category_id`, `month` normalizado al primer día, `expected_amount`, `actual_amount`, `achieved`, `locked` y `updated_at`. Los importes usan `{cents, currency}`. Si el subtotal carece de expectativa, `expected_amount` es nulo. `achieved` indica si el subtotal cumple la expectativa. El subtotal puede incluir movimientos pendientes y diferir de lo recibido según Inicio.
+
+La expectativa pertenece al subtotal existente del contacto y la categoría del plan en ese negocio y mes, sin desglose por agente. Si varios planes coinciden en ese alcance, comparten el mismo subtotal. Un plan que estuvo activo en ese mes se puede consultar aunque ya haya terminado. Un plan inexistente, un mes fuera de su vigencia o un subtotal inexistente devuelve `not_found`.
+
+`update_plan_month_expectation` requiere el `id` de la expectativa, `expected_amount_cents` como entero con signo de 64 bits (admite cero), y `expected_amount_currency` como `usd`, `brl`, `eur`, `ars` o `btc`. También acepta las variantes en mayúsculas y guarda la moneda en minúsculas. Enviá `expected_updated_at` con el `updated_at` de la última lectura y un `request_id` UUID. Conservá el mismo `business_id` cuando corresponda.
+
+La escritura guarda el importe y la moneda para ese subtotal y lo deja bloqueado manualmente. Devuelve `month_expectation` actualizado, `changed_fields` con los valores anterior y nuevo de los campos modificados (`expected_amount_cents`, `expected_amount_currency` o `expected_amount_locked`), `request_id` y `replayed`. Si el registro cambió desde la lectura, devuelve `conflict`. Volvé a consultar el subtotal antes de decidir si corresponde un nuevo ajuste.
+
 ### Analysis
 
 - `category_subtotals`
@@ -181,10 +192,10 @@ The aging finding is `aged_unsettled`: it flags movements older than the configu
 - `create_category`, `update_category`
 - `create_account`, `update_account`
 - `create_recurrent_movement`, `update_recurrent_movement`, `delete_recurrent_movement`
-- `create_plan`, `update_plan`
+- `create_plan`, `update_plan`, `update_plan_month_expectation`
 - `create_automation_rule`, `update_automation_rule`
 
-The implemented MCP exposes thirty-four tools: `list_businesses` plus thirty-three Business-contextual tools. `delete_movement` performs a recoverable soft delete. `delete_recurrent_movement` permanently removes one recurrent rule while preserving movements it already generated. `revert_split` atomically restores one split's original movement and removes all unchanged targets. The MCP does not expose general movement restoration, physical deletion beyond recurrent movement rules, deletion of other record types, batch mutation, import, contact mutation, automatic bank-statement reconciliation, or the monthly budget report.
+The implemented MCP exposes thirty-six tools: `list_businesses` plus thirty-five Business-contextual tools. `delete_movement` performs a recoverable soft delete. `delete_recurrent_movement` permanently removes one recurrent rule while preserving movements it already generated. `revert_split` atomically restores one split's original movement and removes all unchanged targets. The MCP does not expose general movement restoration, physical deletion beyond recurrent movement rules, deletion of other record types, batch mutation, import, contact mutation, automatic bank-statement reconciliation, or the monthly budget report.
 It also does not expose dedicated payable, receivable, or projected-cash-flow tools. Account balances at a date are available through `get_account_balance`. Category tools expose the configured monthly budget only; never claim that this is the report or that unsupported outputs are directly available.
 
 ## Shared contracts

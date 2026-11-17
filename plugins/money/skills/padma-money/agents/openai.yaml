@@ -1,7 +1,7 @@
 interface:
   display_name: "PADMA Money"
-  short_description: "Consultar saldos, pagos y planes con deuda en Money"
-  default_prompt: "Usá $padma-money para consultar el saldo de una cuenta al cierre de una fecha o identificar planes con deuda de pagos en un rango mensual explícito, conservando el negocio y los filtros."
+  short_description: "Consultar saldos y ajustar expectativas mensuales en Money"
+  default_prompt: "Usá $padma-money para consultar saldos por fecha, buscar planes con deuda o revisar y ajustar lo previsto para un mes de un plan."
 
 dependencies:
   tools:
