@@ -7,6 +7,8 @@ description: Use PADMA CRM through its remote MCP server to find authorized acco
 
 Prefer the `crm` MCP server and attempt it first for CRM data. Browser access is allowed only when the user explicitly requests it and the conditions below are met. MCP OAuth determines the account allowlist; `account_name` only selects one account from that authorized set.
 
+Para priorizar a quién contactar después de una clase de prueba, usá [Seguimiento de pruebas](../seguimiento-de-pruebas/SKILL.md).
+
 ## Reject government identifier requests before using tools
 
 When a request involves collecting, looking up, storing, updating, or returning government identifiers or identity documents (including DNI, CPF, RG, national IDs, or passports), refuse that part immediately, before account discovery or any other CRM tool call for that purpose. This applies even when the user has not supplied a number: do not ask for the number, document, attachment, contact, or account to complete the restricted request.
@@ -169,6 +171,9 @@ The workflows below describe MCP tools and contracts. On the explicitly requeste
 6. Repeating the same update is idempotent and returns `updated: false`. Report whether CRM changed the record and verify attribution edits on the target entry in `get_contact_history`.
 
 ## Manage Operations projects, tasks, and activity
+
+Para revisar vencimientos, responsables y bloqueos del equipo, usá
+[Pendientes del equipo](../pendientes-del-equipo/SKILL.md).
 
 1. Confirm the connected server exposes the multi-project `project_assignments` contract and the section tools before using them; documentation in this checkout does not prove deployment. Call `list_operations_projects` when a request names a project, needs project discovery, or will assign or filter tasks by project or section. It returns each project's sorted `member_usernames` and ordered sections; use only a returned `project_id`, `project_section_id`, and username for the selected account. Do not send the retired singular task project fields.
 2. Use `list_operations_tasks` for task requests. It defaults to every active task the authenticated user can read, including later work; use `status`, `due_group`, `assignee_username`, `contact_padma_id`, `project_id`, or `project_section_id` only when needed. `project_id: null` selects main tasks with no projects. `project_section_id: null` selects tasks with no assigned section in any project unless a concrete `project_id` selects that project's section. Both concrete filters must match the same assignment.

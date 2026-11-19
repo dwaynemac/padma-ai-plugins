@@ -7,6 +7,8 @@ description: Use PADMA Money through its remote MCP server to inspect accounts a
 
 Use the `money` MCP server as the only execution path for Money data. OAuth determines the Business allowlist; `business_id` only selects one Business from that authorized set.
 
+Para preparar una lista de alumnos y meses vencidos impagos, usá [Revisión de mensualidades](../revision-de-mensualidades/SKILL.md).
+
 ## Prepare
 
 1. Confirm that `money` tools are available. Do not substitute browser automation or another integration when the MCP server is unavailable.

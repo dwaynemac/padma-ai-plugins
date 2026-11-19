@@ -21,8 +21,13 @@ Este plugin coordina los productos mediante las herramientas de `crm`, `money` y
 2. Use CRM for Operations projects, sections, tasks and conversations, contacts, account-specific relationship data, contact history and communications, marketing-method and dropout-reason rankings, persisted school statistics, comparisons, live commercial follow-up stages, and historical lead funnels.
 3. Use Money for accounts, categories, movements, financial reports, plans, recurrent movements, and automation rules.
 4. Usá Learn para publicaciones, alumnos, accesos, suscripciones, cursos, reservas, check-ins y reportes de asistencia de la escuela. Indicá si falta su plugin o si el pedido corresponde a Accounts u otra aplicación no disponible; no simules acceso.
-5. Read [references/connections-and-scope.md](references/connections-and-scope.md) before selecting organizations or recovering from OAuth/tool availability issues.
-6. Para una consulta integral, seguí el [análisis de un contacto](references/cross-product-workflows.md#analisis-de-un-contacto) o el [panorama de la escuela](references/cross-product-workflows.md#panorama-de-la-escuela). Cruzá la evidencia pertinente y ajustá el período a la pregunta. Usá lecturas para el análisis y reservá las escrituras para las operaciones solicitadas.
+5. Cuando corresponda y la skill esté disponible, seguí el flujo del plugin de producto:
+   - `crm` · `seguimiento-de-pruebas` para priorizar a quién contactar después de una clase de prueba.
+   - `crm` · `pendientes-del-equipo` para revisar vencimientos, responsables y bloqueos en Operaciones.
+   - `money` · `revision-de-mensualidades` para identificar meses vencidos impagos por alumno.
+   - `learn` · `revision-de-asistencia` para comparar reservas, cancelaciones y asistencia por período.
+6. Read [references/connections-and-scope.md](references/connections-and-scope.md) before selecting organizations or recovering from OAuth/tool availability issues.
+7. Para una consulta integral, seguí el [análisis de un contacto](references/cross-product-workflows.md#analisis-de-un-contacto) o el [panorama de la escuela](references/cross-product-workflows.md#panorama-de-la-escuela). Cruzá la evidencia pertinente y ajustá el período a la pregunta. Usá lecturas para el análisis y reservá las escrituras para las operaciones solicitadas.
 
 ## Resolve scope independently
 

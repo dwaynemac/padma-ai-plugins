@@ -1,0 +1,12 @@
+interface:
+  display_name: "Pendientes del equipo"
+  short_description: "Revisá vencimientos y responsables en Operaciones"
+  default_prompt: "Usá $pendientes-del-equipo para decirme qué tareas vencieron, cuáles vencen pronto y cuáles necesitan revisar su responsable."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "crm"
+      description: "Servidor MCP remoto de PADMA CRM"
+      transport: "streamable_http"
+      url: "https://crm.derose.app/mcp"

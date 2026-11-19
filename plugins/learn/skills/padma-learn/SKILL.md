@@ -56,7 +56,8 @@ una consulta contextual.
   al interpretar el pedido. Conservá fecha de ocurrencia, modalidad y timezone.
 - **Reportes:** usá la tool del reporte correspondiente, con período y filtros
   explícitos. Leé [reportes](references/reports.md) para interpretar alcance,
-  totales y paginación.
+  totales y paginación. Para comparar asistencia, reservas y cancelaciones por
+  período, usá [Revisión de asistencia](../revision-de-asistencia/SKILL.md).
 
 La referencia de [operaciones](references/mcp-operations.md) explica las familias
 de tools y su contrato común. Consultá el schema real antes de completar

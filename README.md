@@ -15,6 +15,16 @@ trabajar con sus datos desde Codex y Claude Code.
 Instalá el plugin del producto que necesites. Si la consulta cruza productos,
 agregá `padma` a los plugins de esos productos.
 
+Para la gestión semanal de una escuela o estudio, los plugins de producto
+incluyen skills específicas que podés invocar con estos pedidos.
+
+| Plugin | Skill | Ejemplo |
+| --- | --- | --- |
+| `crm` | [Seguimiento de pruebas](plugins/crm/skills/seguimiento-de-pruebas/SKILL.md) | «¿A quién conviene contactar hoy después de una clase de prueba?» |
+| `crm` | [Pendientes del equipo](plugins/crm/skills/pendientes-del-equipo/SKILL.md) | «¿Qué quedó trabado esta semana y qué tareas vencen pronto?» |
+| `money` | [Revisión de mensualidades](plugins/money/skills/revision-de-mensualidades/SKILL.md) | «Mostrame qué alumnos tienen mensualidades vencidas y de qué meses se trata». |
+| `learn` | [Revisión de asistencia](plugins/learn/skills/revision-de-asistencia/SKILL.md) | «Compará las últimas dos semanas completas y decime qué clases u horarios revisar». |
+
 **Nota:** el repositorio y el marketplace antes se llamaban `padma-tools`.
 El nombre actual de ambos es `padma-ai-plugins`.
 
@@ -292,7 +302,15 @@ El plugin incluye la skill `padma-money`, que enseña al agente el modelo financ
 
 Para consultar un saldo por fecha, usá `get_account_balance` con el `account_id` de `list_accounts` y una fecha `YYYY-MM-DD`. Incluye ese día completo; admite cuentas archivadas y excluye pendientes. Consultá el [contrato y ejemplo](plugins/money/skills/padma-money/references/mcp-operations.md#saldo-de-cuenta-en-get_account_balance).
 
-Para buscar deuda de planes, usá `search_plans` con `has_debt: true` y ambas fechas `from`/`to` en formato `YYYY-MM-DD`. Los días se normalizan al mes; no combines el rango con `active_on`. Un mes activo impago cuenta cuando su primer día es anterior a hoy en la zona horaria del negocio: el mes actual participa desde el segundo día. `has_debt: false` devuelve el complemento entre los planes activos en el rango; omitirlo permite buscar todos esos planes. Este filtro no calcula un saldo ni un total adeudado. Consultá el [contrato completo y los ejemplos](plugins/money/skills/padma-money/references/mcp-operations.md#deuda-de-pagos-en-search_plans).
+Para buscar deuda de planes, usá `search_plans` con `has_debt: true` y ambas
+fechas `from`/`to` en formato `YYYY-MM-DD`. Los días se normalizan al mes. Para
+buscar planes activos en una fecha puntual, usá `active_on` en una consulta
+aparte. Un mes activo impago cuenta desde el día siguiente al vencimiento en la
+zona horaria del negocio, o desde el segundo día del mes cuando el plan no tiene
+día de vencimiento configurado. `has_debt: false` devuelve el complemento entre
+los planes activos en el rango. Omitirlo permite buscar todos esos planes.
+El filtro devuelve planes y la revisión de mensualidades consulta cada mes
+para identificar los impagos. Consultá el [contrato completo y los ejemplos](plugins/money/skills/padma-money/references/mcp-operations.md#deuda-de-pagos-en-search_plans).
 
 #### Configurar el acceso
 

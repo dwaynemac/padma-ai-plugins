@@ -1,6 +1,6 @@
 {
   "name": "money",
-  "version": "0.1.14+codex.20261117200257",
+  "version": "0.1.15+codex.20261119193750",
   "description": "Consult account balances at a date, enriched contacts, and plans with payment debt, and manage authorized PADMA Money businesses, including expectations for individual plan months.",
   "author": {
     "name": "PADMA"

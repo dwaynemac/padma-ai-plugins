@@ -1,0 +1,12 @@
+interface:
+  display_name: "Revisión de asistencia"
+  short_description: "Compará asistencia, reservas y cancelaciones de clases"
+  default_prompt: "Usá $revision-de-asistencia para comparar las últimas dos semanas completas y mostrarme qué clases u horarios conviene revisar."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "learn"
+      description: "Servidor MCP de administración docente de Learn"
+      transport: "streamable_http"
+      url: "https://learn.derose.app/mcp"

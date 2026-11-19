@@ -1,0 +1,12 @@
+interface:
+  display_name: "Revisión de mensualidades"
+  short_description: "Revisá los meses vencidos impagos por alumno"
+  default_prompt: "Usá $revision-de-mensualidades para mostrarme qué alumnos tienen meses vencidos impagos y de qué meses se trata."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "money"
+      description: "Servidor MCP remoto de PADMA Money"
+      transport: "streamable_http"
+      url: "https://money.derose.app/mcp"

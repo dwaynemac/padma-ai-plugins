@@ -1,0 +1,12 @@
+interface:
+  display_name: "Seguimiento de pruebas"
+  short_description: "Priorizá prospectos después de una clase de prueba"
+  default_prompt: "Usá $seguimiento-de-pruebas para decirme a quién conviene contactar hoy después de una clase de prueba."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "crm"
+      description: "Servidor MCP remoto de PADMA CRM"
+      transport: "streamable_http"
+      url: "https://crm.derose.app/mcp"
