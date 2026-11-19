@@ -42,11 +42,20 @@ Después:
 3. Instalá el plugin que quieras usar.
 4. Iniciá una tarea nueva para que el agente cargue sus skills y herramientas.
 
-Para actualizar el catálogo y los plugins instalados:
+### Actualizar en Codex
+
+Ejecutá este comando en la terminal:
 
 ```bash
 codex plugin marketplace upgrade padma-ai-plugins
 ```
+
+Codex comprueba la revisión de Git del marketplace. Si hay una revisión nueva,
+actualiza el catálogo local y refresca los archivos de los plugins que ya tenés
+instalados desde ese marketplace. Después, iniciá una sesión nueva de Codex para
+cargar los cambios. Si la app de escritorio sigue mostrando la versión anterior,
+reiniciá la app.
+[Referencia de Codex CLI](https://learn.chatgpt.com/docs/cli/reference#codex-plugin-marketplace) · [Implementación de la actualización en Codex](https://github.com/openai/codex/blob/rust-v0.170.0/codex-rs/core-plugins/src/manager.rs#L3139-L3184)
 
 ## Instalar el marketplace en Claude Code
 
@@ -70,12 +79,45 @@ claude plugin install crm@padma-ai-plugins
 ```
 
 Iniciá o reiniciá Claude Code para cargar las skills y herramientas del plugin.
+Si ya tenés una sesión abierta, también podés ejecutar `/reload-plugins`.
 
-Para actualizar el catálogo:
+### Actualizar en Claude Code
+
+**Actualización automática.** Claude Code la desactiva por defecto para
+marketplaces de terceros como `padma-ai-plugins`. Para activarla, abrí `/plugin`
+en una sesión interactiva y elegí **Marketplaces** → **padma-ai-plugins** →
+**Enable auto-update**. Después del primer mensaje de una sesión, Claude Code
+espera hasta diez minutos antes de refrescar el catálogo y actualizar en disco
+los plugins instalados. Cuando te avise que hay una actualización, ejecutá
+`/reload-plugins` para aplicarla en esa sesión o cargala al volver a iniciar
+Claude Code.
+[Actualizaciones de plugins en Claude Code](https://code.claude.com/docs/en/plugins/install#keep-plugins-updated) · [Cuándo se ejecutan](https://code.claude.com/docs/en/plugins/loading#when-auto-update-runs)
+
+**Actualización manual.** Para actualizar el catálogo y los plugins instalados
+desde PADMA en una sola operación, elegí `/plugin` → **Marketplaces** →
+**padma-ai-plugins** → **Update marketplace**. Para hacerlo desde la terminal,
+refrescá el catálogo y después actualizá cada plugin instalado que quieras
+poner al día. Por ejemplo, para `money`:
 
 ```bash
 claude plugin marketplace update padma-ai-plugins
+claude plugin update money@padma-ai-plugins
 ```
+
+El primer comando refresca el catálogo. El segundo actualiza la copia de
+`money` en disco. Para cargar cambios hechos desde la terminal, ejecutá
+`/reload-plugins` en la sesión abierta o volvé a iniciar Claude Code. Si hiciste
+los cambios desde el panel `/plugin`, Claude Code intenta aplicarlos al cerrar
+el panel y te avisa si queda una recarga pendiente.
+[Comandos de plugins de Claude Code](https://code.claude.com/docs/en/plugins/cli-reference#plugin-marketplace-update) · [Recarga de plugins](https://code.claude.com/docs/en/plugins/cli-reference#reload-plugins)
+
+### Cambios en los servidores MCP remotos
+
+PADMA despliega los cambios de herramientas y lógica de CRM, Money y Learn
+en sus servidores MCP. Para recibir cambios en los archivos del plugin, como
+skills, comandos o la configuración de conexión MCP, actualizá el plugin en tu
+cliente con los pasos de arriba. Cada despliegue del servidor y cada publicación
+del plugin tienen su propio ciclo de actualización.
 
 ## Plugins disponibles
 
