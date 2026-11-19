@@ -24,7 +24,7 @@
     {
       "name": "padma",
       "source": "./plugins/padma",
-      "description": "Coordinar CRM, Money y Learn mediante sus plugins MCP: relacionar alumnos y contactos con identificadores verificados, consultar accesos y asistencia, actividad comercial, planes y movimientos financieros, conservando organizaciones, permisos y fuentes independientes."
+      "description": "Cruzar datos de CRM, Learn y Money para analizar la situación integral de un contacto o de una escuela, con vínculos de identidad verificados, períodos explícitos y fuentes autorizadas."
     }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: padma-assistant
-description: Coordinar CRM, Money y Learn mediante sus plugins MCP autorizados. Usar para relacionar alumnos de Learn con contactos CRM y Money, consultar su acceso educativo, actividad y situación financiera, gestionar operaciones soportadas por cada producto o preparar análisis comerciales, educativos y financieros de una escuela sin mezclar organizaciones, identificadores ni permisos.
+description: Coordinar CRM, Learn y Money mediante sus plugins MCP autorizados. Usar para analizar la situación integral de contactos específicos o de una escuela, cruzar la relación comercial, el acceso y la actividad educativa con planes y pagos, o gestionar operaciones soportadas en los productos correspondientes.
 ---
 
 # Coordinar PADMA CRM, Money y Learn
@@ -22,7 +22,7 @@ Este plugin coordina los productos mediante las herramientas de `crm`, `money` y
 3. Use Money for accounts, categories, movements, financial reports, plans, recurrent movements, and automation rules.
 4. Usá Learn para publicaciones, alumnos, accesos, suscripciones, cursos, reservas, check-ins y reportes de asistencia de la escuela. Indicá si falta su plugin o si el pedido corresponde a Accounts u otra aplicación no disponible; no simules acceso.
 5. Read [references/connections-and-scope.md](references/connections-and-scope.md) before selecting organizations or recovering from OAuth/tool availability issues.
-6. Read [references/cross-product-workflows.md](references/cross-product-workflows.md) for combined reviews, contact/payment questions, writes, and output conventions.
+6. Para una consulta integral, seguí el [análisis de un contacto](references/cross-product-workflows.md#analisis-de-un-contacto) o el [panorama de la escuela](references/cross-product-workflows.md#panorama-de-la-escuela). Cruzá la evidencia pertinente y ajustá el período a la pregunta. Usá lecturas para el análisis y reservá las escrituras para las operaciones solicitadas.
 
 ## Resolve scope independently
 
@@ -45,7 +45,7 @@ Este plugin coordina los productos mediante las herramientas de `crm`, `money` y
 8. Keep currencies separate and label derived calculations.
 9. Separate MCP-confirmed facts, explicitly requested CRM browser observations, and interpretations or recommendations.
 10. For combined analysis, align periods explicitly but preserve each product's source, date basis, freshness, filters, and missing coverage.
-11. Use CRM `get_commercial_funnel` for current actionable follow-up lists and `get_lead_funnel` for historical monthly conversion. Never treat the live stage counts as a conversion series.
+11. Para conversión histórica, usá CRM `get_lead_funnel`. Para seguimiento actual en un análisis de solo lectura, usá listas existentes o consultas de contactos. `get_commercial_funnel` devuelve etapas vigentes y puede crear búsquedas de sistema.
 12. Use CRM `get_marketing_method_statistics` for acquisition conversion and `get_dropout_reason_statistics` for dropout counts by reason. Preserve the returned account-local monthly range.
 
 Para identificar planes con deuda de pagos, usá Money `search_plans(has_debt: true, from: ..., to: ...)` con ambos extremos mensuales inclusivos, hasta 36 meses, y sin `active_on`. Incluí planes que estuvieron activos en ese período aunque ya hayan terminado. Seguí la skill de Money y [el workflow de deuda de planes](references/cross-product-workflows.md#deuda-de-pagos-de-planes) para interpretar el mes actual y conservar filtros al paginar.

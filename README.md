@@ -3,25 +3,24 @@
 Plugins y skills para que los usuarios de [PADMA](https://derose.app/) puedan
 trabajar con sus datos desde Codex y Claude Code.
 
+## Cuándo usar cada plugin
+
+| Plugin | Responsabilidad |
+| --- | --- |
+| [`crm`](#crm) | Gestiona la relación con los contactos y el seguimiento comercial. Permite registrar comunicaciones, consultar métricas de conversión y administrar proyectos y tareas operativas. |
+| [`money`](#money) | Gestiona las finanzas del negocio. Permite consultar saldos y movimientos, administrar presupuestos y planes de pago, e identificar meses impagos. |
+| [`learn`](#learn) | Gestiona la actividad educativa de la escuela. Permite administrar alumnos, accesos, suscripciones, publicaciones, cursos, reservas y asistencia. |
+| [`padma`](#padma) | Relaciona registros verificados entre productos. Usa las conexiones de los otros plugins para reunir, por ejemplo, el historial comercial, los pagos y la asistencia de un alumno. |
+
+Instalá el plugin del producto que necesites. Si la consulta cruza productos,
+agregá `padma` a los plugins de esos productos.
+
 **Nota:** el repositorio y el marketplace antes se llamaban `padma-tools`.
 El nombre actual de ambos es `padma-ai-plugins`.
 
 Este repositorio publica catálogos específicos para cada cliente. Ambos
 instalan los mismos plugins, skills y conexiones MCP con las aplicaciones de
 PADMA.
-
-Incluye tres integraciones MCP independientes:
-
-- [`crm`](#crm), para contactos, actividad, métricas y operaciones comerciales
-  en PADMA CRM.
-- [`money`](#money), para cuentas, planes, presupuestos y movimientos
-  financieros en PADMA Money.
-- [`learn`](#learn), para administrar publicaciones, alumnos, accesos,
-  suscripciones, cursos con módulos y asistencia de una escuela en Learn.
-
-Instalá los plugins de los productos que necesites y agregá `padma` para
-coordinar consultas entre CRM, Money y Learn. Si tu consulta pertenece a un
-único producto, alcanza con su plugin.
 
 Cada directorio bajo `plugins/` también publica el contrato portable de
 [Agent Plugins 1.0](https://agent-plugins.org/) mediante un `plugin.json`, sus
@@ -155,6 +154,18 @@ El plugin incluye la skill `padma-assistant`, una versión orientada al usuario
 final del mapa de ecosistema que usan los developers. Evita detalles de
 repositorios, modelos y rutas internas; enseña al agente a elegir el MCP
 correcto y a no mezclar tenants, identificadores, monedas ni fechas.
+
+#### Análisis integral de contactos y escuelas
+
+- **Un contacto.** Reuní su relación con la escuela y sus comunicaciones en
+  CRM, sus accesos y asistencia en Learn, y sus planes y pagos en Money.
+  [Análisis de un contacto](plugins/padma/skills/padma-assistant/references/cross-product-workflows.md#analisis-de-un-contacto)
+- **La escuela.** Cruzá métricas de captación, asistencia y finanzas para
+  entender qué cambió en el período que te interesa. Si necesitás actuar sobre
+  casos concretos, pedí una lista ordenada según tu objetivo.
+  [Panorama de la escuela](plugins/padma/skills/padma-assistant/references/cross-product-workflows.md#panorama-de-la-escuela)
+
+`padma` indica las fuentes, los períodos y los datos que quedaron sin verificar.
 
 #### Elegir el modo de instalación
 
@@ -332,7 +343,7 @@ Se pueden publicar comentarios; no se pueden editar ni eliminar mediante MCP.
 
 ### PADMA
 
-- “Relacioná este alumno de Learn con su contacto CRM y revisá sus accesos y movimientos en Money.”
+- “Mostrame la situación integral de este contacto. ¿Qué sabemos de su relación con la escuela, su acceso, su asistencia y sus pagos?”
 - “Dame un panorama comercial, financiero y de asistencia de mi escuela este trimestre.”
 - “¿La mejora del funnel coincide con mayores ingresos? Separá hechos de interpretación.”
 - “Buscá este contacto en CRM y revisá si tiene movimientos relacionados en Money.”

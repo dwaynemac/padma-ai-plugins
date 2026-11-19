@@ -1,15 +1,49 @@
 # Cross-product workflows
 
-## School overview
+<a id="analisis-de-un-contacto"></a>
 
-1. Resolve the CRM account and Money Business independently.
-2. Confirm one common calendar period.
-3. In CRM, use persisted monthly statistics, comparisons, `get_marketing_method_statistics`, `get_dropout_reason_statistics`, or `get_lead_funnel` for the historical commercial context that matches the question. Use `get_commercial_funnel` only when the overview also needs the contacts requiring follow-up now.
-4. In Money, use category subtotals and deterministic movement analysis for financial context.
-5. Si el panorama incluye actividad educativa, consultá Learn mediante `padma-learn` y conservá escuela, período, timezone y filtros de sus reportes. Presentá por separado la evidencia de cada producto antes de interpretarla.
-6. Label CRM missing months, Money date basis, pagination, currencies, freshness, and material filters.
+## Análisis de un contacto
 
-Do not imply that commercial changes caused financial changes solely because the periods align. Describe correlation as interpretation unless the returned data directly establishes a relationship.
+1. Identificá a la persona y la escuela solicitadas. Partí del producto en el
+   que el usuario ubicó a la persona. Verificá los vínculos entre
+   [Learn, CRM y Money](#relacionar-un-alumno-de-learn-con-crm-y-money) dentro
+   de las organizaciones seleccionadas. Para un análisis integral, consultá
+   las tres fuentes disponibles.
+2. En CRM, leé el estado de la relación con la escuela y, si aporta contexto,
+   el historial de comunicaciones. En Learn, verificá el acceso actual y
+   consultá las reservas, los check-ins, los cursos o las suscripciones que
+   ayuden a entender la situación. En Money, verificá los planes, los meses
+   impagos y los movimientos registrados que correspondan al pedido.
+   Usá el ID del contacto devuelto por Money para filtrar sus planes.
+3. Relacioná los hechos en una síntesis o cronología cuando ayude. Por ejemplo,
+   podés señalar que una persona mantiene el acceso en Learn y tiene un mes
+   impago en Money. Identificá la fecha y la fuente de cada dato y explicá
+   qué información falta antes de sugerir un próximo paso.
+
+## Panorama de la escuela
+
+1. Definí la pregunta y el alcance. Para un panorama integral, consultá las
+   tres fuentes disponibles. Si falta un período, elegí uno adecuado para la
+   pregunta y explicitalo. Alineá los períodos comparables e indicá qué
+   lecturas reflejan el estado actual y cuáles cubren un rango histórico.
+2. En CRM, consultá el seguimiento de contactos o las métricas de captación,
+   conversión, matrículas y bajas que respondan a la pregunta. En Learn, usá
+   los reportes de reservas y asistencia con su zona horaria y filtros.
+   En Money, consultá ingresos, gastos, planes o pagos según el pedido.
+   Para cruzar resultados agregados, aplicá los criterios de
+   [comparación comercial y financiera](#funnel-and-financial-comparison)
+   y conservá las unidades, fechas, monedas y poblaciones de cada fuente.
+3. Si el pedido requiere llegar a personas concretas, verificá cada identidad
+   con el mismo criterio que en el [análisis de un contacto](#analisis-de-un-contacto).
+   Por ejemplo, contrastá pruebas registradas en Learn con comunicaciones
+   posteriores en CRM, o cambios de asistencia con meses impagos en Money.
+   Usá datos de asistencia comparables y marcá como parcial cualquier tramo
+   de historial limitado por Learn. Una clasificación de check-in ausente
+   deja pendiente su verificación si cambia el resultado.
+4. Sintetizá los hallazgos que surgen del cruce. Si el usuario pide casos para
+   actuar, ordenalos según la relevancia para su objetivo y adjuntá un
+   próximo paso por caso. Identificá la evidencia de cada producto y marcá
+   los vínculos o resultados que quedaron sin verificar.
 
 ## Contact and payment questions
 
@@ -53,8 +87,8 @@ Treat every nullable Money contact enrichment independently. Do not turn a missi
    y compará los valores devueltos, sin inventar parámetros de búsqueda.
 4. Si comenzás en CRM, pedí el mismo campo en `get_contact` o `search_contacts`
    y usá su valor no nulo en Learn `get_user`, con el `account_name` de Learn.
-   Una lectura exitosa verifica el alumno y su acceso en esa escuela; el ID
-   guardado en CRM por sí solo no confirma su acceso educativo actual.
+   Verificá que coincida el `user_id` devuelto. Para informar el acceso en
+   esa escuela, comprobá si la respuesta incluye `access` y leé su estado.
 5. Con el `padma_id` del contacto CRM confirmado, usá Money
    `search_contacts(padma_id: ...)` y, si corresponde, `search_movements` con
    `contact_padma_id` y período explícito, siempre en el negocio seleccionado.
@@ -89,8 +123,8 @@ financiero registrado en Money. Conservá fuente, fecha, timezone y cobertura.
 
 1. Resolvé el negocio Money con `list_businesses` y fijá el período solicitado.
 2. Usá `search_plans(has_debt: true, from: ..., to: ...)` con fechas ISO y ambos meses inclusivos, hasta 36 meses. No combines `active_on` con el rango.
-3. Paginá conservando el negocio, rango, `has_debt` y demás filtros. Los planes pueden haber terminado: alcanza con que hayan estado activos en el rango y tengan un mes activo impago cuyo primer día sea anterior a hoy en el negocio.
-4. El mes actual participa desde su segundo día. No presentes el resultado como saldo de cuenta, importe total adeudado ni prueba del estado comercial o de acceso a clases.
+3. Paginá conservando el negocio, rango, `has_debt` y demás filtros. Un plan terminado puede aparecer si tiene un mes activo impago cuyo vencimiento ya pasó en la zona horaria del negocio. Sin día de vencimiento configurado, el mes cuenta desde su segundo día.
+4. Si necesitás identificar qué mes quedó impago, consultá cada mes por separado. Una consulta de varios meses sólo confirma que alguno cumple el criterio. Money devuelve planes, sin calcular un importe adeudado.
 5. Para planes sin meses que cumplan ese criterio dentro del rango, usá `has_debt: false`; para todos los planes activos en el rango, omití `has_debt`. Un plan futuro sin meses vencidos también puede cumplir `false`.
 
 Si necesitás contexto CRM, vinculá identidades sólo mediante el `padma_id` confirmado y resolvé cada organización por separado. La fuente del filtro de deuda sigue siendo Money; seguí su referencia de operaciones para el contrato completo.
@@ -107,9 +141,9 @@ Si necesitás contexto CRM, vinculá identidades sólo mediante el `padma_id` co
 
 `get_commercial_funnel` answers a different question: it is a current
 operational snapshot of acquisition, qualified, booked, trialed, and enrolled
-contact lists. Use it when the user wants present follow-up workload, then open
-a returned `list_id` with `get_contact_list`. Do not compare those live list
-counts with historical Money periods as if they were conversion metrics.
+contact lists. The tool can initialize system searches. If the user requests
+a strictly read-only review, use existing saved lists or contact reads. Keep
+live list counts separate from historical conversion metrics.
 
 ## Writes in a combined workflow
 
@@ -150,10 +184,13 @@ Never create a missing account, category, contact, or other related record impli
 
 ## Combined answer format
 
-Lead with the outcome, then keep sources auditable:
+Empezá por el hallazgo que responde a la pregunta. Usá el nombre del contacto
+o de la escuela como título e incluí sólo las fuentes pertinentes. Identificá
+las organizaciones consultadas, los períodos, los límites de cobertura y
+qué conclusiones son interpretaciones. Este formato sirve como guía:
 
 ```markdown
-## Panorama
+## <Contacto o escuela>
 
 CRM account: <account_name>
 Money Business: <business>

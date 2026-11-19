@@ -1,7 +1,7 @@
 interface:
   display_name: "PADMA Assistant"
-  short_description: "Coordinar CRM, Money y Learn por alumno"
-  default_prompt: "Usá $padma-assistant para relacionar un alumno de Learn con su contacto CRM y su situación financiera en Money, verificando identificadores y organizaciones mediante los MCP de cada producto."
+  short_description: "Analizar contactos y escuelas con datos de PADMA"
+  default_prompt: "Usá $padma-assistant para analizar la situación integral de mi escuela. Cruzá la actividad comercial, la asistencia y las finanzas en CRM, Learn y Money."
 
 dependencies:
   tools:
