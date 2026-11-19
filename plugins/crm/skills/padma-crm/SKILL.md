@@ -1,6 +1,6 @@
 ---
 name: padma-crm
-description: Use PADMA CRM through its remote MCP server to find authorized accounts; search or create account-scoped contacts and assign or remove existing tags; inspect saved-list rules and retrieve their contacts, properties, ages, Learn links, activity, and history; create or update communications and comments; manage authorized Operations projects, sections, multi-project task assignments, collaborators, recurrence, comments, and task change history; and analyze school statistics, acquisition, dropout reasons, commercial follow-up, and historical lead funnels. Use for requests about CRM contacts, prospects, students, saved lists, ages, custom properties, Learn activity or churn risk, dropout segmentation, communications, operational projects, tasks, messages or task history, enrollment metrics, monthly performance, or commercial funnels stored in PADMA CRM.
+description: Use PADMA CRM through its remote MCP server to find authorized accounts; search or create account-scoped contacts and assign or remove existing tags and marketing methods; inspect saved-list rules and retrieve their contacts, properties, ages, Learn links, activity, and history; create or update communications and comments; manage authorized Operations projects, sections, multi-project task assignments, collaborators, recurrence, comments, and task change history; and analyze school statistics, acquisition, dropout reasons, commercial follow-up, and historical lead funnels. Use for requests about CRM contacts, prospects, students, saved lists, ages, custom properties, Learn activity or churn risk, dropout segmentation, marketing attribution, communications, operational projects, tasks, messages or task history, enrollment metrics, monthly performance, or commercial funnels stored in PADMA CRM.
 ---
 
 # Use PADMA CRM
@@ -62,6 +62,14 @@ The workflows below describe MCP tools and contracts. On the explicitly requeste
 4. Use `add_contact_tags` to add assignments and `remove_contact_tags` to remove only the requested assignments. Neither creates nor deletes the account's tags, and unrelated assignments remain unchanged.
 5. Both tools are atomic and idempotent. Repeated IDs are normalized; an already assigned tag or an absent assignment is a successful no-op. A retry must keep the same account, contact, operation, and IDs.
 6. Report `changed_tag_ids` and the returned final `tags` for the selected account. An empty `changed_tag_ids` means no change, not a failure. Read [references/contacts.md](references/contacts.md#tag-assignments) for the response and error contract.
+
+## Manage a contact's marketing methods
+
+1. Confirm the connected server exposes the CRM MCP 2.1.0 contract and that `get_account_context` grants write capability before changing assignments.
+2. Resolve the contact with `search_contacts`. Use `get_contact` with `response_fields: ["marketing_methods"]` for its assignments and `get_contact_history` to see the methods on each communication in the selected account.
+3. To add a method, resolve its active ID with `list_marketing_methods`. Call `add_contact_marketing_methods` with `account_name`, `padma_id`, and `marketing_method_ids`. CRM uses the latest incoming communication, falls back to the latest communication, or creates an internal incoming messaging record without sending a message.
+4. To remove a method, look up its ID with the contact selector above. Use `remove_contact_marketing_methods` for removal from all of the contact's communications in the selected account. It accepts assigned active and archived methods. For a change to one communication, follow “Update a contact communication”.
+5. Read back the assignments with `get_contact` and report the result. An empty `removed_marketing_method_ids` means no assignments were removed. See [references/contacts.md](references/contacts.md#marketing-method-assignments) for the response contract.
 
 ## Add a contact to a saved list
 
@@ -156,9 +164,9 @@ The workflows below describe MCP tools and contracts. On the explicitly requeste
 1. Use `update_contact_communication` only when the user explicitly asks to correct an existing communication.
 2. Resolve the selected account and exact communication first. Use the `object_id` from its `Communication` entry in `get_contact_history`, or the `id` returned by `create_contact_communication`.
 3. Pass `communication_id` and only the approved editable fields: `observations`, `media`, `communicated_at`, `incoming`, `estimated_coefficient`, or `marketing_method_ids`. Omitted fields are preserved.
-4. Treat `marketing_method_ids` as a complete replacement. Call `list_marketing_methods` first, use only active IDs from the selected account, and send an empty array only when the user explicitly wants to clear every method.
+4. Treat `marketing_method_ids` as a complete replacement. Read the target entry's `marketing_methods` in `get_contact_history` before changing its assignments. If the field is absent, treat the current assignments as unknown and do not attempt a partial correction. Keep the IDs that should remain, including archived methods already assigned to that communication. Resolve new active IDs with `list_marketing_methods`. Send an empty array only when the user explicitly wants to clear every method on that communication.
 5. Do not attempt to change the account, contact, author, request ID, or idempotency metadata; the tool does not accept them.
-6. Repeating the same update is idempotent and returns `updated: false`. Report whether CRM changed the record.
+6. Repeating the same update is idempotent and returns `updated: false`. Report whether CRM changed the record and verify attribution edits on the target entry in `get_contact_history`.
 
 ## Manage Operations projects, tasks, and activity
 
@@ -196,7 +204,7 @@ The workflows below describe MCP tools and contracts. On the explicitly requeste
 
 ## Respect write limits
 
-- CRM can assign or remove existing contact tags, create or reuse contacts, create supported system or custom contact properties, create or update communications, create contact comments, manage Operations projects, their sections, and tasks, and participate in readable task conversations within the authenticated user's permissions.
+- CRM can assign or remove existing contact tags and marketing methods, create or reuse contacts, create supported system or custom contact properties, create or update communications, create contact comments, manage Operations projects, their sections, and tasks, and participate in readable task conversations within the authenticated user's permissions.
 - Contact creation only enriches missing identity and relationship fields; it does not overwrite existing contact data.
 - Property writes add values and preserve birthday conflicts; they do not expose `public` or `primary` controls.
 - CRM cannot otherwise update contacts, statuses, or statistics.

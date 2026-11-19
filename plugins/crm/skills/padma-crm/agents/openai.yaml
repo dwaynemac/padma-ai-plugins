@@ -1,7 +1,7 @@
 interface:
   display_name: "PADMA CRM"
   short_description: "Consultar contactos, tareas, actividad y métricas"
-  default_prompt: "Usá $padma-crm para buscar contactos autorizados y sus edades cuando sean necesarias, inspeccionar los filtros de listas guardadas y agregar contactos mediante sus etiquetas de inclusión cuando corresponda, agregar o quitar etiquetas existentes de contactos, gestionar miembros de proyectos y sus secciones, asignar tareas operativas a varios proyectos, manejar colaboradores y recurrencias, consultar comentarios e historial de cambios de tareas, crear o corregir actividad y elegir el análisis adecuado. Priorizá e intentá primero el MCP; usá el navegador para CRM solo ante solicitud explícita y bajo las condiciones de padma-crm."
+  default_prompt: "Usá $padma-crm para buscar contactos autorizados y sus edades cuando sean necesarias, inspeccionar los filtros de listas guardadas y agregar contactos mediante sus etiquetas de inclusión cuando corresponda, agregar o quitar etiquetas y métodos de marketing existentes de contactos, consultar los métodos asignados en el contacto y por comunicación, gestionar miembros de proyectos y sus secciones, asignar tareas operativas a varios proyectos, manejar colaboradores y recurrencias, consultar comentarios e historial de cambios de tareas, crear o corregir actividad y elegir el análisis adecuado. Priorizá e intentá primero el MCP; usá el navegador para CRM solo ante solicitud explícita y bajo las condiciones de padma-crm."
 
 dependencies:
   tools:

@@ -268,6 +268,8 @@ Permite:
 - buscar contactos por identidad, cumpleaños, estado, vínculo con la cuenta, actividad, fechas y motivos de baja;
 - agregar o quitar etiquetas existentes de un contacto cuando el servidor expone `add_contact_tags` y `remove_contact_tags` (CRM MCP 1.19.0 o posterior), conservando las demás asignaciones y sin borrar etiquetas;
 - descubrir etiquetas, métodos de marketing, motivos de baja y listas guardadas antes de usarlos;
+- agregar o quitar métodos de marketing existentes de un contacto con `add_contact_marketing_methods` y `remove_contact_marketing_methods`, cuando el servidor expone el contrato de CRM MCP 2.1.0;
+- consultar los métodos asignados al contacto con `get_contact` y `response_fields: ["marketing_methods"]`, o ver los de cada comunicación en `get_contact_history`, incluidos los archivados de la cuenta seleccionada;
 - consultar una lista guardada respetando sus filtros, orden y columnas configuradas, incluida la edad calculada sin exponer la fecha de nacimiento; inspeccionar sus reglas mediante `list.filters` cuando el servidor las expone;
 - agregar un contacto a una lista mediante una etiqueta existente cuando sus reglas de inclusión lo permiten, comprobar las demás condiciones y verificar la pertenencia después de asignarla;
 - descubrir propiedades personalizadas y consultar valores seleccionados del contacto;
@@ -372,6 +374,8 @@ Se pueden publicar comentarios; no se pueden editar ni eliminar mediante MCP.
 - “Registrá a Ana como prospect con este email y teléfono.”
 - “Guardá esta llamada saliente en el contacto que acabo de seleccionar.”
 - “Corregí el medio y la fecha de esta comunicación.”
+- “Mostrame los métodos de marketing de este contacto y en qué comunicación se registraron.”
+- “Agregá el método de marketing Instagram al contacto que seleccioné.”
 - “Agregá este comentario al contacto que acabo de seleccionar.”
 - “Listá los proyectos operativos disponibles en esta cuenta.”
 - “Creá una sección en este proyecto operativo y ordená sus secciones como te indiqué.”

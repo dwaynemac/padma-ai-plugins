@@ -28,13 +28,15 @@ The CRM hostname selects the OAuth issuer and resource. It does not restrict aut
 | `add_contact_tags` | optional account; required `padma_id`, nonempty `tag_ids` | Idempotently assign existing account tags to a contact. |
 | `remove_contact_tags` | optional account; required `padma_id`, nonempty `tag_ids` | Idempotently remove selected assignments without deleting tags. |
 | `list_marketing_methods` | optional `account_name` | Discover active account marketing method IDs and values. |
+| `add_contact_marketing_methods` | optional account, required `padma_id`, nonempty `marketing_method_ids` | Assign active methods via a contact's communication in the selected account. |
+| `remove_contact_marketing_methods` | optional account, required `padma_id`, nonempty `marketing_method_ids` | Remove active or archived assignments from all of the contact's communications in the selected account. |
 | `list_dropout_reasons` | optional `account_name` | Discover account dropout reason IDs and values for `dropout_reason_ids`. |
 | `list_contact_lists` | optional `account_name` | Discover saved contact-list IDs and names. |
 | `get_contact_list` | optional account, required `list_id`; optional `page_size`, `cursor` | Execute one saved list, expose its persisted rules as `list.filters` when supported, and return its contacts with fields derived from its configured columns, including top-level age. |
 | `list_custom_property_definitions` | optional `account_name` | Discover account-owned custom property IDs, labels, and data types. |
 | `search_contacts` | optional account, filters, response selectors, `page_size`, `cursor` | Search account-scoped contact summaries and optionally project age, selected properties, Learn user IDs, or activity summaries. |
 | `get_contact` | optional `account_name`, required `padma_id`; optional response selectors | Read one account-scoped contact detail and optionally project age, selected properties, its Learn user ID, or activity summary. |
-| `get_contact_history` | optional account, required `padma_id`; optional `page_size`, `cursor` | Read the contact activity feed, newest entry first. |
+| `get_contact_history` | optional account, required `padma_id`; optional `page_size`, `cursor` | Read the activity feed newest first, including account-scoped marketing methods per communication when exposed. |
 | `create_contact` | optional account; required `first_name` plus `email` or `phone` | Create a contact or reuse an exact account-owned identity, enriching only missing fields. |
 | `create_contact_comment` | optional account, required `padma_id` and `observations` | Create an account-visible follow-up comment as the authenticated user. |
 | `create_contact_property` | optional account; required `padma_id`, `property_type`, and `value` | Idempotently create a supported account-owned system or custom contact property. |
@@ -133,11 +135,17 @@ When either property selector is present, each contact includes a flat `properti
 
 System values include their applicable phone, address, or birthday metadata. Custom values identify their definition, label, and data type. A `Contact` value returns a nested related contact with only `padma_id` and `friendly_name`; CRM omits a relationship when its target is unavailable in the selected account.
 
+The CRM MCP 2.1.0 `get_contact` contract also supports `marketing_methods` in `response_fields`, for distinct current assignments including archived methods. See [contact marketing method assignments](contacts.md#marketing-method-assignments).
+
 ## Contact tag writes
 
 `add_contact_tags` and `remove_contact_tags` require CRM MCP 1.19.0 or later and write capability. Check live tool availability before use. Inputs are the selected `account_name`, a confirmed contact `padma_id`, and a nonempty `tag_ids` array of positive integers returned by `list_tags` in that account. Names and foreign-account IDs are not accepted.
 
 Batches are atomic, preserve unrelated assignments, normalize duplicate IDs, and are idempotent. Existing additions and absent removals are successful no-ops. Responses contain `account_name`, `contact: {padma_id}`, `changed_tag_ids` in request order, and final account-scoped `tags: [{tag_id, name}]` ordered by name and ID. Removal is marked destructive but only removes assignments, never the tags themselves. See [contacts.md](contacts.md#tag-assignments) for errors and result interpretation.
+
+## Contact marketing method writes
+
+Verify that the connected server exposes `add_contact_marketing_methods` or `remove_contact_marketing_methods` (CRM MCP 2.1.0) before use. Both require write capability and a nonempty array of positive integer method IDs in the selected account. For addition, use active IDs from `list_marketing_methods`. For removal, use assigned active or archived IDs from `get_contact`. Use `update_contact_communication` for a correction limited to one communication. See [contacts.md](contacts.md#marketing-method-assignments) for response fields and scope.
 
 ## Contact and communication writes
 
@@ -173,9 +181,9 @@ For `update_contact_communication`:
 
 - Resolve the exact communication in the selected account. Use the `object_id` from its `Communication` history entry or the `id` returned by `create_contact_communication`.
 - Pass `communication_id` and at least one of `observations`, `media`, ISO 8601 `communicated_at`, `incoming`, `estimated_coefficient`, or `marketing_method_ids`.
-- Omitted fields are preserved. `marketing_method_ids` is a complete replacement; an empty array clears every method.
+- Omitted fields are preserved. `marketing_method_ids` is a complete replacement. Under the CRM MCP 2.1.0 contract, use the history entry's `marketing_methods` to preserve the intended assignments, including archived methods already assigned to that communication. New assignments require active IDs. An empty array clears every method.
 - Account, contact, username, request ID, and idempotency fingerprint cannot be changed.
-- Repeating an identical update returns `updated: false`.
+- Repeating an identical update returns `updated: false`. The response includes readable marketing method IDs from the selected account under the CRM MCP 2.1.0 contract.
 
 For `create_contact_comment`, pass only the resolved `padma_id` and exact approved `observations`. Each call creates a new comment, so inspect `get_contact_history` before retrying an uncertain result.
 

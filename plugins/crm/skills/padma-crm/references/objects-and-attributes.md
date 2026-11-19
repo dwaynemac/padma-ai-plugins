@@ -27,7 +27,7 @@ Interpret CRM records with these product semantics. The names shown are the MCP 
 ## Marketing methods
 
 - Marketing methods (`marketing_method_ids`) represent the school's marketing campaigns or acquisition methods, for example a specific campaign.
-- Each school defines the methods it uses, so their names and exact scope are account-specific. Confirm the current values with `list_marketing_methods` before interpreting or filtering them.
+- Each school defines its own methods and names. `list_marketing_methods` lists active methods for discovery and filtering. Assigned archived methods are visible on the contact and on the communication that carries the assignment. See [contact marketing method assignments](contacts.md#marketing-method-assignments).
 
 ## Dropout reasons
 

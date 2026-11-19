@@ -47,6 +47,15 @@ These operations change assignments, not the tags themselves. They preserve unre
 
 Each batch is atomic and idempotent. Duplicate IDs are normalized. Adding an existing assignment or removing an absent one succeeds without changing it. Report the returned `account_name`, `contact: {padma_id}`, `changed_tag_ids` (unique IDs actually changed, in request order), and `tags: [{tag_id, name}]` (final assignments in the selected account, ordered by name and ID). Empty `changed_tag_ids` is a successful no-op. Do not interpret the response as assignments in any other account.
 
+## Marketing method assignments
+
+Verify that the connected server exposes the CRM MCP 2.1.0 contract. Read `contact.marketing_methods` via `get_contact` with `response_fields: ["marketing_methods"]`. It lists distinct active and archived assignments as `{marketing_method_id, value}`, where `value` is the name. An empty list means the contact has no assignments in the selected account.
+
+Both write tools require write capability and take `account_name`, the contact's `padma_id`, and a nonempty `marketing_method_ids` array. Resolve IDs in the selected account.
+
+- `add_contact_marketing_methods` accepts active IDs from `list_marketing_methods`. CRM uses the latest incoming communication, falls back to the latest communication, or creates an internal incoming messaging record without sending a message. The result includes `communication_id` and the readable `marketing_method_ids` on that communication from the selected account. Existing assignments are preserved.
+- `remove_contact_marketing_methods` accepts active or archived IDs from the contact's assignments. It removes the selected methods from all communications for the contact in that account and preserves the communications and catalog entries. CRM validates the whole selection before writing. `removed_marketing_method_ids` lists only methods actually removed and is empty when a repeat call finds no assignments.
+
 ## Saved lists
 
 `list_contact_lists` discovers current list IDs and names. To retrieve one saved list, pass its `list_id` to `get_contact_list`; do not translate the list into `search_contacts` filters. The saved list's persisted filters and ordering determine which contacts are returned. Use the same tool to inspect its rules through `list.filters` when that field is exposed by the connected server.
@@ -71,7 +80,7 @@ Email and phone are resolved from properties belonging to the selected account. 
 
 To expand contacts returned by `get_contact` or `search_contacts`, pass any needed response selectors:
 
-- `response_fields`: accepts `age` for the contact's current age, `learn_user_id` for the contact's Learn identifier, and `learn_activity_summary` for the stored Learn snapshot;
+- `response_fields`: accepts `age` for the contact's current age, `learn_user_id` for the contact's Learn identifier, and `learn_activity_summary` for the stored Learn snapshot. With CRM MCP 2.1.0, `get_contact` also accepts `marketing_methods`;
 - `property_types`: `email`, `telephone`, `birthday`, `address`, or `occupation`;
 - `property_configuration_ids`: IDs returned by `list_custom_property_definitions` for the selected account.
 
@@ -117,6 +126,8 @@ Each entry includes `id`, `type`, `object_id`, `content`, `username`, `account_n
 
 History content can contain sensitive free text. Summarize only the entries relevant to the request, identify their activity dates, and avoid reproducing unrelated notes verbatim.
 
+With the CRM MCP 2.1.0 contract, a `Communication` entry in the selected account includes a `marketing_methods` array with its active and archived assignments as `{marketing_method_id, value}`. An empty array means that communication has no assignments. An omitted field provides no assignment information.
+
 ## Create a contact comment
 
 Use `create_contact_comment` only after resolving the contact in the selected account and confirming the exact comment text from the user's request. Pass:
@@ -146,7 +157,7 @@ CRM derives the username from the authenticated principal and sanitizes observat
 
 Use `update_contact_communication` only after identifying the exact communication in the selected account. Pass its `object_id` from a `Communication` entry returned by `get_contact_history`, or its `id` from `create_contact_communication`, as `communication_id`.
 
-Supply at least one editable field: `observations`, `media`, ISO 8601 `communicated_at`, `incoming`, `estimated_coefficient`, or `marketing_method_ids`. Omitted fields remain unchanged. Marketing methods are a complete replacement, so discover active IDs first and send an empty array only to clear every method.
+Supply at least one editable field: `observations`, `media`, ISO 8601 `communicated_at`, `incoming`, `estimated_coefficient`, or `marketing_method_ids`. Omitted fields remain unchanged. Marketing methods are a complete replacement. Read that communication's current assignments from `get_contact_history` and include the IDs to keep, including archived methods already assigned there under the CRM MCP 2.1.0 contract. Resolve new active IDs with `list_marketing_methods`. Send an empty array only to clear every method on that communication.
 
 The tool preserves the account, contact, author, request ID, and idempotency metadata. Repeating values already stored is safe and returns `updated: false`.
 
@@ -160,4 +171,4 @@ The tool preserves the account, contact, author, request ID, and idempotency met
 - Treat `not_found` as absence from the selected authorized account, not proof that the person does not exist elsewhere.
 - Keep returned CRM facts separate from guesses about identity, intent, or personal characteristics.
 
-CRM can assign or remove existing contact tags, create or reuse contacts, create supported contact properties, create or update communications, and create contact comments through this plugin. Contact creation enriches only missing fields, and property writes only add normalized values. Do not promise status changes, other contact edits, imports, merges, or deletions.
+CRM can assign or remove existing contact tags and marketing methods, create or reuse contacts, create supported contact properties, create or update communications, and create contact comments through this plugin. Contact creation enriches only missing fields, and property writes only add normalized values. Do not promise status changes, other contact edits, imports, merges, or deletions.
