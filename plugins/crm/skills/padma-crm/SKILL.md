@@ -56,6 +56,10 @@ The workflows below describe MCP tools and contracts. On the explicitly requeste
 6. Treat email, phone, Learn user IDs, visits, status, coefficient, teacher, tags, and list membership as personal data. Return only fields needed for the user's request.
 7. State the selected account and material filters. Keep facts returned by CRM separate from interpretation.
 
+## Summarize contact history
+
+Use `get_contact_history` in the selected account. Include communications returned from other DeROSE schools and identify the school for each entry. Follow the [history guidance](references/contacts.md#history) for attribution and detail.
+
 ## Add or remove contact tags
 
 1. Confirm that `add_contact_tags` or `remove_contact_tags` is available in the connected server and that `get_account_context` includes write capability. These tools require CRM MCP 1.19.0 or later; documentation alone does not prove deployment.

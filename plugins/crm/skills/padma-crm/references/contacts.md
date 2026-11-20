@@ -126,6 +126,10 @@ Each entry includes `id`, `type`, `object_id`, `content`, `username`, `account_n
 
 History content can contain sensitive free text. Summarize only the entries relevant to the request, identify their activity dates, and avoid reproducing unrelated notes verbatim.
 
+For a general history summary, include the `Communication` entries from other DeROSE schools that the MCP returns, including entries with a null `object_id`. Attribute each entry using its own `account_name`. Prefer the school's display name when the response provides it, and use the account name otherwise. Keep the selected account unchanged when reading the history.
+
+For a nonpublic communication, report the summary returned in `content`. Include trial attendance and `estimated_coefficient` when supplied. Treat an unknown coefficient as unknown and leave private details out.
+
 With the CRM MCP 2.1.0 contract, a `Communication` entry in the selected account includes a `marketing_methods` array with its active and archived assignments as `{marketing_method_id, value}`. An empty array means that communication has no assignments. An omitted field provides no assignment information.
 
 ## Create a contact comment
