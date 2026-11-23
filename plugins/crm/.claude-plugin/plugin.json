@@ -1,7 +1,7 @@
 {
   "name": "crm",
-  "version": "0.3.20",
-  "description": "Consult authorized PADMA CRM contacts, saved-list rules, tag and marketing method assignments, Operations project members and sections, multi-project task assignments, collaborators, recurrence, comments, and task change history, rankings, Learn links, properties, activity, and statistics, and safely create or update supported records through its remote MCP server. Prefer and attempt MCP first; CRM browser access requires an explicit user request and preserves authorization and data restrictions.",
+  "version": "0.3.21",
+  "description": "Consult authorized PADMA CRM contacts, saved-list rules, tag and marketing method assignments, Operations project members and sections, multi-project task assignments, collaborators, recurrence, comments, and task change history, rankings, Learn links, properties, activity, statistics, and WhatsApp Business conversations, and safely create or update supported records through its remote MCP server. Prefer and attempt MCP first; CRM browser access requires an explicit user request and preserves authorization and data restrictions.",
   "author": {
     "name": "PADMA"
   },

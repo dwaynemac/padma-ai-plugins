@@ -351,6 +351,8 @@ Permite:
 - crear propiedades de sistema o de texto personalizadas sin duplicar valores normalizados;
 - crear comunicaciones idempotentes bajo el usuario autenticado;
 - corregir campos editables de una comunicación existente sin cambiar su contacto, autor ni metadatos de idempotencia;
+- listar conversaciones de WhatsApp Business, leer su historial sin marcarlas como leídas y consultar nuevos mensajes entrantes en líneas habilitadas para MCP (CRM MCP 2.2.0);
+- responder con texto en conversaciones existentes, agregar o quitar reacciones y consultar el estado de envío y entrega, según los permisos y la ventana de respuesta de 24 horas. Consultá el [contrato de WhatsApp Business](plugins/crm/skills/padma-crm/references/mcp-operations.md#whatsapp-business).
 - crear comentarios visibles para la cuenta en el contacto seleccionado;
 - listar y administrar proyectos operativos compartidos, sus miembros y el orden de sus secciones según el rol del usuario;
 - crear y ordenar secciones de proyectos con `create_operations_project_section` y `reorder_operations_project_sections` (CRM MCP 1.20.0 o posterior), con permiso de escritura y rol admin o director; descubrir y reutilizar las secciones existentes, enviar la lista completa de IDs al ordenar y verificar cada cambio mediante lectura, sin mover tareas;
@@ -445,6 +447,7 @@ Se pueden publicar comentarios; no se pueden editar ni eliminar mediante MCP.
 - “Registrá a Ana como prospect con este email y teléfono.”
 - “Guardá esta llamada saliente en el contacto que acabo de seleccionar.”
 - “Corregí el medio y la fecha de esta comunicación.”
+- “Mostrame las conversaciones no leídas de WhatsApp Business de esta cuenta.”
 - “Mostrame los métodos de marketing de este contacto y en qué comunicación se registraron.”
 - “Agregá el método de marketing Instagram al contacto que seleccioné.”
 - “Agregá este comentario al contacto que acabo de seleccionar.”

@@ -1,7 +1,7 @@
 {
   "name": "crm",
-  "version": "0.3.20",
-  "description": "Consult authorized PADMA CRM contacts, saved-list rules, tag and marketing method assignments, Operations project members and sections, multi-project task assignments, collaborators, recurrence, comments, and task change history, rankings, Learn links, properties, activity, and statistics, and safely create or update supported records through its remote MCP server. Prefer and attempt MCP first; CRM browser access requires an explicit user request and preserves authorization and data restrictions.",
+  "version": "0.3.21",
+  "description": "Consult authorized PADMA CRM contacts, saved-list rules, tag and marketing method assignments, Operations project members and sections, multi-project task assignments, collaborators, recurrence, comments, and task change history, rankings, Learn links, properties, activity, statistics, and WhatsApp Business conversations, and safely create or update supported records through its remote MCP server. Prefer and attempt MCP first; CRM browser access requires an explicit user request and preserves authorization and data restrictions.",
   "author": {
     "name": "PADMA"
   },
@@ -17,8 +17,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "PADMA CRM",
-    "shortDescription": "Manage contacts and tasks",
-    "longDescription": "Search and manage contacts, commercial activity, projects, tasks, comments, and task change history in your authorized PADMA CRM accounts. Use saved lists, tags, marketing methods, supported properties, communications, and school statistics with your existing permissions. Government identifiers and identity documents are not supported through this plugin. Prioriza e intenta primero MCP. Para CRM, permite navegador solo ante solicitud explícita, con los mismos límites de cuenta, permisos, datos y confirmaciones.",
+    "shortDescription": "Contacts, tasks and WhatsApp",
+    "longDescription": "Search and manage contacts, commercial activity, projects, tasks, comments, and task change history in your authorized PADMA CRM accounts. Use saved lists, tags, marketing methods, supported properties, communications, and school statistics with your existing permissions. Read WhatsApp Business conversations and queue text replies or reactions on enabled lines. Government identifiers and identity documents are not supported through this plugin. Prioriza e intenta primero MCP. Para CRM, permite navegador solo ante solicitud explícita, con los mismos límites de cuenta, permisos, datos y confirmaciones.",
     "developerName": "PADMA",
     "category": "Productivity",
     "capabilities": [
@@ -119,11 +119,11 @@
         "demo_recording_url": "https://drive.google.com/file/d/1qyoIn9PWyFyNAXbnCcB1JdIPCtdA6SOE/view?usp=drivesdk"
       },
       "publication": {
-        "release_notes": "Adds workflows for assigning and removing contact marketing methods, reading active and archived assignments on contacts and communications, and preserving existing archived methods when correcting a communication. These workflows require the CRM MCP 2.1.0 contract. Confirm tool availability on the connected CRM server. Prefers and attempts MCP first; permits official CRM UI access only on explicit user request, preserving account authorization, data restrictions, write confirmations, and readback. Requires CRM MCP 2.0.0 or later for MCP workflows.",
+        "release_notes": "Adds WhatsApp Business inbox browsing, inbound polling, text replies, reactions, and delivery status on enabled lines through the CRM MCP 2.2.0 contract. Confirm tool availability on the connected CRM server. Prefers and attempts MCP first; permits official CRM UI access only on explicit user request, preserving account authorization, data restrictions, write confirmations, and readback. Requires CRM MCP 2.0.0 or later for MCP workflows.",
         "translations": {
           "es": {
             "subtitle": "Contactos, tareas y mensajes",
-            "description": "Consultá y gestioná contactos, actividad comercial, proyectos y tareas de las cuentas de PADMA CRM que autorices. Buscá contactos y listas guardadas, organizá etiquetas, métodos de marketing y propiedades, registrá comunicaciones y coordiná tareas, secciones y conversaciones. Analizá estadísticas y seguimiento comercial con los permisos de tu usuario."
+            "description": "Consultá y gestioná contactos, actividad comercial, proyectos y tareas de las cuentas de PADMA CRM que autorices. Buscá contactos y listas guardadas, organizá etiquetas, métodos de marketing y propiedades, registrá comunicaciones y coordiná tareas, secciones y conversaciones. Analizá estadísticas y seguimiento comercial. Consultá conversaciones de WhatsApp Business y respondé con texto o reacciones en líneas habilitadas según tus permisos."
           }
         }
       }

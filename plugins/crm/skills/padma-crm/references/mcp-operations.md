@@ -67,6 +67,30 @@ The CRM hostname selects the OAuth issuer and resource. It does not restrict aut
 | `get_marketing_method_statistics` | optional account, `start_month`, `end_month` | Count distinct communication and enrollment contacts by marketing method and return conversion percentages. |
 | `get_dropout_reason_statistics` | optional account, `start_month`, `end_month` | Count distinct dropout contacts by account-defined reason. |
 
+## WhatsApp Business
+
+Check that the connected server exposes the required CRM MCP 2.2.0 tools.
+Every call uses the selected `account_name`. CRM must enable the line for
+MCP, and the user needs the corresponding web inbox permissions. Sending
+and reacting also require MCP write capability and use the authenticated CRM
+user's identity.
+
+| Tool | Input in the selected account | Use |
+|---|---|---|
+| `waba_list_conversations` | Optional `connection_id`, `contact_padma_id`, `unread_only`, `cursor` | List conversations by recent activity. |
+| `waba_list_inbound_messages` | Optional `connection_id`, `page_size`, `cursor`, `from_beginning` | Poll live inbound messages. |
+| `waba_get_conversation` | `conversation_id`; optional `page_size`, `cursor` | Read history and eligibility without marking the conversation read. |
+| `waba_send_message` | `conversation_id`, `body`, `request_id` | Queue a text reply in an existing conversation. |
+| `waba_set_reaction` | `conversation_id`, `message_id`, `emoji`, `request_id` | Add or replace the business reaction. Pass `emoji: ""` to remove it. |
+| `waba_get_delivery_status` | `outbound_request_id` | Read the request's queue status and any provider delivery status. |
+
+- Resolve the contact with `search_contacts` when needed and use its returned `padma_id` as `contact_padma_id`. Use line, conversation, message, and outbound request IDs returned in the same account. Use the inbox list for unread chats and the inbound feed for new events.
+- Inbox cursors preserve the initial order for up to 15 minutes. Continue with the same filters when `next_cursor` is present, even on a short page. Start without a cursor to refresh or recover from expiration. For older conversation history, follow that conversation's own `next_cursor`.
+- The first inbound poll starts at the current end of the feed. Use `from_beginning: true` on the first call only when replaying retained live messages. Save `next_cursor` after processing each page, including the first or an empty page. Keep the same account and line filter and continue immediately while `has_more` is true. Newly enabled lines start at their current end when resuming a saved cursor. The feed excludes imported history, outgoing echoes, reactions, revoked and suppressed messages, and currently ignored identities.
+- Check `reply_eligibility.eligible` for a text reply and the target entry's `reactions.eligible` for a reaction. CRM enforces the 24-hour reply window and applicable line and message rules. If a write returns `validation_failed`, use `details.reason` to explain why. These tools support text replies in existing chats and reactions.
+- Generate an opaque `request_id` of up to 191 characters for each approved action. Retry an uncertain request or queue failure with the same key and payload. A changed payload with the same key returns `idempotency_conflict`. A retry that still needs a delivery job must pass current eligibility. On `reaction_pending`, check the existing request's status before attempting another reaction change.
+- Keep `outbound_request_id` from the write or queue error for readback. Report `request_status` separately from `delivery_status`. A queued request or a null provider status does not establish delivery.
+
 ## Ranking statistics
 
 Use `get_marketing_method_statistics` to compare account-defined acquisition
