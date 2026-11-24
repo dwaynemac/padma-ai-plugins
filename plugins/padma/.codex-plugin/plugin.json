@@ -1,6 +1,6 @@
 {
   "name": "padma",
-  "version": "0.1.19+codex.20261119194650",
+  "version": "0.1.20+codex.20261124153357",
   "description": "Cruzar datos de CRM, Learn y Money para analizar la situación integral de un contacto o de una escuela, con vínculos de identidad verificados, períodos explícitos y fuentes autorizadas.",
   "author": {
     "name": "PADMA"
@@ -27,7 +27,7 @@
     ],
     "websiteURL": "https://derose.app/",
     "defaultPrompt": [
-      "Mostrame la situación integral de este contacto. Incluí su relación con la escuela, acceso, asistencia y pagos.",
+      "Mostrame la situación integral de este contacto. Incluí historial y tareas pendientes, accesos y cambios de suscripción programados, planes, movimientos recientes y meses impagos.",
       "Mostrame los planes con deuda de pagos de enero a marzo de 2026, incluidos los que ya terminaron.",
       "Dame un panorama de captación, asistencia y finanzas de mi escuela este trimestre.",
       "Buscá un contacto en CRM y revisá sus movimientos en Money.",

@@ -210,7 +210,9 @@ correcto y a no mezclar tenants, identificadores, monedas ni fechas.
 #### Análisis integral de contactos y escuelas
 
 - **Un contacto.** Reuní su relación con la escuela y sus comunicaciones en
-  CRM, sus accesos y asistencia en Learn, y sus planes y pagos en Money.
+  CRM junto con las tareas pendientes asociadas. Revisá sus accesos habilitados,
+  el estado de sus suscripciones y los cambios programados en Learn, y sus
+  planes, movimientos recientes y meses vencidos impagos en Money.
   [Análisis de un contacto](plugins/padma/skills/padma-assistant/references/cross-product-workflows.md#analisis-de-un-contacto)
 - **La escuela.** Cruzá métricas de captación, asistencia y finanzas para
   entender qué cambió en el período que te interesa. Si necesitás actuar sobre

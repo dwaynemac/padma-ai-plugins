@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "padma",
-  "version": "0.1.19+codex.20261119194650",
+  "version": "0.1.20+codex.20261124153357",
   "description": "Cruzar datos de CRM, Learn y Money para analizar la situación integral de un contacto o de una escuela, con vínculos de identidad verificados, períodos explícitos y fuentes autorizadas.",
   "author": {
     "name": "PADMA"

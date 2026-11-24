@@ -27,7 +27,7 @@ Este plugin coordina los productos mediante las herramientas de `crm`, `money` y
    - `money` · `revision-de-mensualidades` para identificar meses vencidos impagos por alumno.
    - `learn` · `revision-de-asistencia` para comparar reservas, cancelaciones y asistencia por período.
 6. Read [references/connections-and-scope.md](references/connections-and-scope.md) before selecting organizations or recovering from OAuth/tool availability issues.
-7. Para una consulta integral, seguí el [análisis de un contacto](references/cross-product-workflows.md#analisis-de-un-contacto) o el [panorama de la escuela](references/cross-product-workflows.md#panorama-de-la-escuela). Cruzá la evidencia pertinente y ajustá el período a la pregunta. Usá lecturas para el análisis y reservá las escrituras para las operaciones solicitadas.
+7. Para una ficha integral de un contacto, seguí el [análisis de un contacto](references/cross-product-workflows.md#analisis-de-un-contacto) y cubrí las tres fuentes disponibles. Para una consulta sobre la escuela, seguí el [panorama de la escuela](references/cross-product-workflows.md#panorama-de-la-escuela). Ajustá el período a la pregunta. Usá lecturas para el análisis y reservá las escrituras para las operaciones solicitadas.
 
 ## Resolve scope independently
 

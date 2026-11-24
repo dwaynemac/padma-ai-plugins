@@ -8,17 +8,35 @@
    que el usuario ubicó a la persona. Verificá los vínculos entre
    [Learn, CRM y Money](#relacionar-un-alumno-de-learn-con-crm-y-money) dentro
    de las organizaciones seleccionadas. Para un análisis integral, consultá
-   las tres fuentes disponibles.
-2. En CRM, leé el estado de la relación con la escuela y, si aporta contexto,
-   el historial de comunicaciones. En Learn, verificá el acceso actual y
-   consultá las reservas, los check-ins, los cursos o las suscripciones que
-   ayuden a entender la situación. En Money, verificá los planes, los meses
-   impagos y los movimientos registrados que correspondan al pedido.
-   Usá el ID del contacto devuelto por Money para filtrar sus planes.
-3. Relacioná los hechos en una síntesis o cronología cuando ayude. Por ejemplo,
-   podés señalar que una persona mantiene el acceso en Learn y tiene un mes
-   impago en Money. Identificá la fecha y la fuente de cada dato y explicá
-   qué información falta antes de sugerir un próximo paso.
+   las tres fuentes disponibles y cubrí los bloques siguientes. Si el pedido
+   es puntual, consultá las fuentes y los datos pertinentes.
+2. **CRM.** Leé el estado de la relación con la escuela con `get_contact` y
+   resumí los hitos y comunicaciones relevantes de `get_contact_history`.
+   Consultá `list_operations_tasks(contact_padma_id: ..., status: "active")`
+   con el `padma_id` confirmado. Informá título, responsable y vencimiento de
+   las tareas visibles, incluidas las vencidas y las que no tienen fecha.
+3. **Learn.** Usá `get_user` para verificar el acceso escolar efectivo y qué
+   accesos están habilitados. Incluí cursos o publicaciones compartidas cuando
+   sean relevantes. Consultá `list_subscriptions(user_id: ...)` sin filtrar por
+   estado para incluir también las suscripciones pausadas o canceladas. Informá
+   el estado registrado en Learn y, para cada suscripción, consultá
+   `list_subscription_updates(subscription_id: ..., pending: true)`. Indicá
+   la fecha prevista y los valores que cambiarían. Distinguí el cambio pendiente,
+   incluso si su fecha ya pasó, del estado vigente y de cualquier efecto
+   confirmado por el proveedor. Sumá reservas o check-ins si el pedido los requiere.
+4. **Money.** Consultá los planes con `search_plans(contact_id: ...)` usando
+   el ID local del contacto confirmado en Money. Leé los movimientos con
+   `search_movements(contact_padma_id: ...)` siguiendo [contactos y pagos](#contact-and-payment-questions).
+   Usá el período pedido o elegí y explicitá un rango reciente, por ejemplo los
+   últimos 30 días. Para identificar meses vencidos impagos, conservá el filtro
+   del contacto y seguí [deuda de pagos de planes](#deuda-de-pagos-de-planes).
+   Indicá el rango revisado y distinguí los movimientos registrados de la
+   expectativa y la deuda del plan.
+5. Presentá la situación actual por app y relacioná los hallazgos que ayudan a
+   entender el caso. Por ejemplo, una persona puede tener acceso habilitado en
+   Learn y un mes vencido impago en Money. Identificá la fuente y la fecha o
+   período de cada hallazgo. Diferenciá una consulta sin resultados dentro del
+   alcance autorizado de un dato que quedó sin verificar.
 
 ## Panorama de la escuela
 

@@ -1,7 +1,7 @@
 interface:
   display_name: "PADMA Assistant"
   short_description: "Analizar contactos y escuelas con datos de PADMA"
-  default_prompt: "Usá $padma-assistant para analizar la situación integral de mi escuela. Cruzá la actividad comercial, la asistencia y las finanzas en CRM, Learn y Money."
+  default_prompt: "Usá $padma-assistant para preparar la ficha integral de un contacto con su historial y tareas pendientes en CRM, accesos y suscripciones con sus cambios programados en Learn, y planes, movimientos y meses impagos en Money."
 
 dependencies:
   tools:
