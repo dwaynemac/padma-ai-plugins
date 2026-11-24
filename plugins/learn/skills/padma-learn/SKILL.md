@@ -41,9 +41,13 @@ una consulta contextual.
   [módulos de cursos](references/mcp-operations.md#módulos-de-cursos).
   Antes de quitar un miembro, verificá si el acceso proviene de una suscripción
   o plantilla; no uses otro permiso para eludir una restricción del servidor.
-- **Suscripciones:** leé [suscripciones](references/subscriptions.md) antes de
-  modificar cobros, cancelaciones, cambios programados o reembolsos. El servidor
-  conserva las reglas de Stripe/MercadoPago y de las suscripciones manuales.
+- **Suscripciones:** para ver aumentos programados, cambios de precio programados
+  o cambios pendientes de suscripciones, consultá
+  `list_subscription_updates(pending: true)`. Para interpretar los resultados
+  o consultar el historial, seguí [cambios programados](references/subscriptions.md#cambios-programados).
+  Antes de modificar cobros, cancelaciones, cambios programados o reembolsos,
+  leé [suscripciones](references/subscriptions.md). El servidor conserva las
+  reglas de Stripe/MercadoPago y de las suscripciones manuales.
 - **Precios para invitados:** consultá el default de la escuela y el precio
   efectivo de la clase antes de cambiarlos. Usá templates elegibles de esa
   escuela; sin cobro, la reserva conserva confirmación manual. Seguí

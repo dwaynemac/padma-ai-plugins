@@ -156,7 +156,8 @@ módulo. Estas operaciones requieren el soporte correspondiente desplegado en
 Learn; el plugin comprueba las tools y campos disponibles antes de usarlos.
 
 Las operaciones de suscripciones respetan las reglas existentes de Stripe,
-MercadoPago y suscripciones manuales.
+MercadoPago y suscripciones manuales. Podés consultar aumentos programados,
+otros cambios pendientes y el historial de cambios de suscripciones.
 
 No administra cuentas de teachers ni configuración global; no automatiza
 duplicación avanzada, híbridos, reuniones Zoom ni grabaciones. Las reservas

@@ -35,11 +35,22 @@ concreto si el pedido no lo determina claramente.
 
 ## Cambios programados
 
-`list_subscription_updates` consulta cambios. `create_subscription_update`
-requiere `subscription_id`, su `expected_updated_at`, `run_update_on` y al menos
-un nuevo valor. `create_subscription_updates_batch` admite hasta 100
-suscripciones explícitas, cada una con su revisión; un `multiplier` se excluye
-con `new_amount_cents`.
+- Para ver qué está programado, usá `list_subscription_updates(pending: true)`.
+  Si el pedido se refiere a una suscripción, pasá su `subscription_id` verificado.
+  Para el historial completo, omití `pending` e identificá los cambios aplicados
+  por `updated_subscription_at` y los reemplazados por `superseded_at`. Conservá
+  los filtros y seguí `next_cursor` para cubrir todo el alcance pedido.
+- Para cambios de precio, incluí los registros con `new_amount_cents` y mostrá
+  la fecha programada (`run_update_on`). Si el usuario pide sólo aumentos
+  pendientes, compará el importe previsto con el vigente de la suscripción.
+  Si falta el importe vigente, informá el cambio como pendiente de clasificar.
+  Un cambio pendiente sigue pendiente aunque su fecha programada ya haya pasado.
+
+Para programar un cambio solicitado, `create_subscription_update` requiere
+`subscription_id`, su `expected_updated_at`, `run_update_on` y al menos un
+nuevo valor. `create_subscription_updates_batch` admite hasta 100 suscripciones
+explícitas, cada una con su revisión. `multiplier` se excluye con
+`new_amount_cents`.
 
 `update_subscription_update` y `delete_subscription_update` operan sobre el
 `id` y la revisión del cambio programado. `run_subscription_update` ejecuta
