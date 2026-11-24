@@ -16,9 +16,10 @@ configuran Client ID/Secret compartidos ni API keys. Instalar o cambiar de host
 requiere conectar el recurso elegido y autorizar las escuelas necesarias; una
 sesión en CRM/Money o en el navegador no autentica este MCP.
 
-El teacher debe existir en Learn y conservar su vinculación a la escuela. El
-MCP no convierte alumnos en teachers ni crea cuentas administrativas durante
-la conexión.
+Para conectarse como docente, la persona inicia sesión en Accounts con su
+usuario de PADMA. Ese usuario debe estar habilitado como docente en Learn y
+conservar su vinculación a la escuela. El MCP no convierte alumnos en teachers
+ni crea cuentas administrativas durante la conexión.
 
 ## Contrato común
 

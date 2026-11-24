@@ -166,8 +166,9 @@ personales de alumnos usan su integración propia.
 #### Configurar el acceso
 
 1. Instalá `learn` e iniciá una tarea nueva.
-2. Conectá el MCP mediante Accounts OAuth. El cliente descubre CIMD/DCR y usa
-   PKCE; no configures un Client ID ni un Client Secret compartidos.
+2. Conectá el MCP mediante Accounts OAuth con tu usuario de PADMA habilitado
+   como docente en Learn. El cliente descubre CIMD/DCR y usa PKCE; no configures
+   un Client ID ni un Client Secret compartidos.
 3. Autorizá las escuelas necesarias con `openid profile account learn`.
 4. Verificá con `Listá mis escuelas autorizadas de Learn.` y después consultá
    `get_account_context` de la escuela seleccionada. El teacher debe existir y

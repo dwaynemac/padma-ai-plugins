@@ -20,7 +20,10 @@ no concede acceso adicional.
 4. Usá IDs obtenidos de lecturas de Learn dentro de esa escuela. Un `padma_id`,
    un contacto de CRM y un usuario de Learn son identificadores distintos.
 
-El cliente administra OAuth con Accounts. No pidas tokens ni códigos en el chat.
+El cliente administra OAuth con Accounts. Si necesitás pedirle al usuario que
+identifique o conecte su cuenta docente, llamala «tu usuario de PADMA habilitado
+como docente en Learn». Si necesitás que elija una escuela, pedile la escuela
+autorizada en Learn. No pidas tokens ni códigos en el chat.
 Si falta la conexión, seguí [conexión y operaciones](references/mcp-operations.md).
 Una sesión OAuth exitosa se verifica con una llamada real a `list_accounts` y
 una consulta contextual.
