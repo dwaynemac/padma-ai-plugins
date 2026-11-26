@@ -1,6 +1,6 @@
 ---
 name: padma-learn
-description: "Administrar una escuela de PADMA Learn o Learn DeROSE mediante su MCP docente: publicaciones, alumnos y accesos, suscripciones, cursos con módulos y miembros, reservas y sus precios para invitados, check-ins y reportes de asistencia. Usar para solicitudes de gestión de teachers o administradores de escuela. Las reservas personales de un alumno usan la integración de alumnos, no este MCP."
+description: "Administrar una escuela de PADMA Learn o Learn DeROSE mediante su MCP docente: publicaciones, alumnos, gestión de accesos y cambios programados de plantilla, suscripciones, cursos con módulos y miembros, reservas y sus precios para invitados, check-ins y reportes de asistencia. Usar para solicitudes de gestión de teachers o administradores de escuela. Las reservas personales de un alumno usan la integración de alumnos, no este MCP."
 ---
 
 # Administrar Learn
@@ -38,7 +38,11 @@ una consulta contextual.
 - **Alumnos y accesos:** consultá usuarios existentes o usá la invitación
   soportada. Los accesos a la escuela, los permisos de contenido y las
   inscripciones a cursos tienen efectos distintos. No crees teachers, cambies
-  roles administrativos ni borres identidades de alumno.
+  roles administrativos ni borres identidades de alumno. Para pasar a otro plan
+  de acceso desde una fecha futura, seguí
+  [cambio programado de plantilla](references/mcp-operations.md#cambiar-una-plantilla-de-acceso-desde-una-fecha-futura).
+  Esta operación pertenece a `padma-learn` y se puede hacer directamente con
+  el MCP docente de Learn.
 - **Cursos:** administrá sus datos, módulos, contenido, orden y miembros. Para
   crear, renombrar, reordenar o eliminar módulos y asignarles contenido, seguí
   [módulos de cursos](references/mcp-operations.md#módulos-de-cursos).

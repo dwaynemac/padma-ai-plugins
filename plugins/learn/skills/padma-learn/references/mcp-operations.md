@@ -84,6 +84,51 @@ La v1 no automatiza duplicación avanzada, creación/vinculación de híbridos,
 reuniones Zoom ni obtención de grabaciones. No reemplaces esas funciones con
 cambios de campos internos.
 
+## Cambiar una plantilla de acceso desde una fecha futura
+
+Un pedido como «pasá a Julia de 8 clases por mes a Premium el 3 de diciembre»
+es un cambio de acceso. Si ya hay un cambio de precio agendado, usá su fecha
+como referencia cuando el usuario pida que coincidan. El precio y el acceso se
+guardan por separado.
+
+1. Identificá la escuela, el alumno y la fecha. Usá la zona horaria de
+   `get_account_context`. Para un día sin hora, tomá el inicio del día local y
+   reportá la hora elegida. Buscá al alumno con `list_users` y leé los grants en
+   `get_user.access.grants` o en `list_users.items[].grants`. Identificá el
+   `accounts_user_id`, el grant a reemplazar y su `updated_at`. Con
+   `list_access_templates`, confirmá la plantilla de destino y sus permisos.
+   Si hay varios grants posibles, aclaralo antes de escribir.
+2. Revisá si la membresía seguirá habilitada al momento del cambio y si otro
+   grant vigente o futuro seguirá dando el acceso que se quiere reemplazar.
+   Los permisos se combinan entre grants vigentes. Si el grant anterior está
+   ligado a una suscripción, verificá con `get_subscription` que sea del mismo
+   alumno en esa escuela y conservá su `subscription_id` en el nuevo grant si
+   el pedido cambia sólo el acceso del mismo plan de cobro. Si no queda claro
+   qué suscripción debe regular el nuevo permiso, resolvelo antes de escribir.
+   Un grant con suscripción sólo da acceso mientras esa suscripción esté activa.
+3. Para un cambio por vigencia, creá con `create_access_grant` un grant
+   vinculado a `access_template_id` con `enables_access_since` en la fecha
+   acordada. Enviá la fecha en ISO 8601 con offset. La plantilla vinculada
+   aporta sus modalidades, contenido y cupo. Conservá el vencimiento anterior
+   si sigue siendo aplicable y el pedido no cambia la duración. Si el grant
+   anterior vence antes de la transición o el cambio requiere matrícula en
+   PADMA, asignaciones individuales de una plantilla con `unlinked_grant`,
+   o un cambio de la regulación de la membresía, resolvé ese alcance antes
+   de escribir. `apply_access_template` aplica en el momento y `disable_at`
+   fija una fecha de vencimiento.
+4. Creá primero el futuro grant, salvo que la lectura ya muestre uno equivalente
+   para esa transición. Luego usá `update_access_grant` para fijar
+   `enables_access_until` del grant anterior en el mismo instante de transición,
+   con su revisión recién leída. Ambos límites son inclusivos en ese instante.
+   Usá un `request_id` por escritura y seguí el contrato de reintentos ante
+   errores. Si sólo se guardó el grant nuevo, releé y conciliá antes de
+   reintentar el vencimiento. Mientras falte verificarlo, informá que el
+   reemplazo quedó incompleto.
+5. Releé ambos grants y confirmá plantilla, fechas y vínculo de suscripción
+   cuando corresponda. Informá qué permiso sigue vigente y cuál quedó
+   programado. Learn recalcula las modalidades y el cupo en un ciclo periódico,
+   por lo que el acceso efectivo puede reflejar el cambio unos minutos después.
+
 ## Módulos de cursos
 
 Comprobá que el servidor conectado anuncie las cinco tools de módulos y el campo

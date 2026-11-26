@@ -143,6 +143,12 @@ alumnos y accesos, suscripciones, cursos con módulos y sus miembros, reservas y
 Incluye reportes estructurados de check-ins, reservas, distribución de check-ins
 y clases por instructor, conservando permisos, períodos y filtros de `/admin`.
 
+Para cambiar el acceso de un alumno desde una fecha futura, usá `padma-learn`.
+La skill puede programar el fin del permiso actual y el inicio de uno vinculado
+a la plantilla nueva cuando el cambio se resuelve por vigencia de grants.
+Los cambios de precio se gestionan por separado. Consultá
+[el flujo de cambio programado](plugins/learn/skills/padma-learn/references/mcp-operations.md#cambiar-una-plantilla-de-acceso-desde-una-fecha-futura).
+
 Cuando el servidor conectado expone las tools de precios para invitados, permite
 consultar y cambiar el default escolar, listar templates de pago elegibles y
 configurar cada clase para heredar, ser sin costo o usar un template específico.

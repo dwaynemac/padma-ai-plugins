@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "learn",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Administer authorized Learn schools through the teacher MCP: publications, students and access, subscriptions, courses, modules and members, bookings, guest booking pricing, check-ins, and attendance reports.",
   "author": {
     "name": "PADMA"
@@ -32,7 +32,8 @@
           "Listá mis escuelas autorizadas de Learn.",
           "Mostrame las reservas de esta semana en mi escuela.",
           "Consultá el reporte de check-ins del último mes.",
-          "Mostrame los aumentos de suscripciones programados en mi escuela."
+          "Mostrame los aumentos de suscripciones programados en mi escuela.",
+          "¿Cómo programo un cambio de plantilla de acceso para un alumno?"
         ]
       }
     }

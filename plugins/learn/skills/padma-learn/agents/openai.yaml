@@ -1,7 +1,7 @@
 interface:
   display_name: "PADMA Learn"
-  short_description: "Administrar cursos, módulos, reservas y precios en Learn"
-  default_prompt: "Usá $padma-learn para administrar mi escuela autorizada en Learn, revisar cambios de precio programados en suscripciones, organizar cursos, configurar precios de reservas de invitados o consultar reportes de asistencia."
+  short_description: "Administrar accesos, suscripciones y cursos en Learn"
+  default_prompt: "Usá $padma-learn para administrar mi escuela autorizada en Learn, programar cambios de acceso, revisar cambios de precio programados en suscripciones, organizar cursos, configurar precios de reservas de invitados o consultar reportes de asistencia."
 
 dependencies:
   tools:
